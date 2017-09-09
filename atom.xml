@@ -18,6 +18,7 @@ layout: null
  {% for post in site.posts %}
  <entry>
    <title>{{ post.title }}</title>
+   <p>{{ site | jsonify }}</p>
    <link href="{{ site.github.url }}{{ post.url }}"/>
    <updated>{{ post.date | date_to_xmlschema }}</updated>
    <id>{{ site.github.url }}{{ post.id }}</id>
