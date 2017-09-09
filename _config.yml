@@ -8,7 +8,7 @@ permalink:        pretty
 # Setup
 title:            aischool
 tagline:          'Stop Worrying And Love Stochastic Gradient Descent'
-description:      'A practical guide to deep learning: for Python hackers, data scientists, the chronically-impatient, people who hate math but love computer science, and, most importantly, the AI researchers of the future.'
+description:      'A practical guide to deep learning: for Python hackers, data scientists, the chronically-impatient, and the AI researchers of the future.'
 url:              https://github.com/nikcheerla/deeplearningschool
 baseurl:          /
 
