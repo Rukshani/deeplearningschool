@@ -251,7 +251,7 @@ a.sidebar-nav-item:focus {
 
 img + em { 
    text-align: center;
-  font-size: .8rem;
-  color: light-grey;
+  font-size: .65rem;
+  color: silver;
 }
 
