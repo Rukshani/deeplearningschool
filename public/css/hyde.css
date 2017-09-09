@@ -259,3 +259,7 @@ a.sidebar-nav-item:focus {
   color: silver;
 }
 
+img {
+    display: block;
+    margin: 0 auto;
+}
