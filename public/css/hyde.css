@@ -254,6 +254,8 @@ a.sidebar-nav-item:focus {
 }
 
 .image-caption { 
+  display: block;
+  margin: auto;
   text-align: center;
   font-size: .65rem;
   color: silver;
