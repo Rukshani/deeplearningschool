@@ -6,7 +6,7 @@ layout: null
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>{{ Chaos Theory }}</title>
- <link href="{{ google.com }}/atom.xml" rel="self"/>
+ <link href="google.com" rel="self"/>
  <link href="{{ google.com }}/"/>
  <updated>{{ site.time | date_to_xmlschema }}</updated>
  <id>{{ site.url }}</id>
@@ -18,7 +18,7 @@ layout: null
  {% for post in site.posts %}
  <entry>
    <title>{{ post.title }}</title>
-   <link href="{{ google.com }}{{ post.url }}"/>
+   <link href="google.com"/>
    <updated>{{ post.date | date_to_xmlschema }}</updated>
    <id>{{ site.github.url }}{{ post.id }}</id>
    <content type="html">{{ post.content | xml_escape }}</content>
