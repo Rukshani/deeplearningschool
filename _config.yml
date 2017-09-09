@@ -6,10 +6,10 @@ highlighter:      rouge
 permalink:        pretty
 
 # Setup
-title:            Hyder
-tagline:          'A Jekyll theme'
-description:      'A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
-url:              http://hyde.getpoole.com
+title:            Deep Learning School
+tagline:          'How I Learned To Stop Worrying And Love Stochastic Gradient Descent'
+description:      'A practical guide to deep learning: for Python hackers, data scientists, the chronically-impatient, people who hate math but love computer science, and, most importantly, the AI researchers of the future.'
+url:              https://github.com/nikcheerla/deeplearningschool
 baseurl:          /
 
 author:
@@ -23,4 +23,4 @@ version:          2.1.0
 gems: [jekyll-paginate]
 
 github:
-  repo:           https://github.com/poole/hyde
+  repo:           https://github.com/nikcheerla/deeplearningschool
