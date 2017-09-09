@@ -248,3 +248,10 @@ a.sidebar-nav-item:focus {
 .theme-base-0f .related-posts li a:hover {
   color: #8f5536;
 }
+
+img + em { 
+   text-align: center;
+  font-size: .8rem;
+  color: light-grey;
+}
+
