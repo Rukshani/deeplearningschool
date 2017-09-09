@@ -259,7 +259,7 @@ a.sidebar-nav-item:focus {
   text-align: center;
   font-size: .65rem;
   color: silver;
-  padding-bottom: 2cm;
+  padding-bottom: 0.45cm;
 }
 
 img {
