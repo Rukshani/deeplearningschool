@@ -24,3 +24,8 @@ gems: [jekyll-paginate]
 
 github:
   repo:           https://github.com/nikcheerla/deeplearningschool
+
+prose:
+  rooturl: '_posts'
+  siteurl: 'http://nikcheerla.github.io/deeplearningschool'
+  media: 'media'
