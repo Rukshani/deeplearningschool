@@ -249,8 +249,12 @@ a.sidebar-nav-item:focus {
   color: #8f5536;
 }
 
-img + em { 
-   text-align: center;
+.image-wrapper {
+  margin: auto;
+}
+
+.image-caption { 
+  text-align: center;
   font-size: .65rem;
   color: silver;
 }
