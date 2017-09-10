@@ -7,8 +7,6 @@ title: Home
   {% for post in paginator.posts %}
   <div class="post">
     <h1 class="post-title">
-      <p> {{post | jsonify }} </p>
-      <p> This is my war. </p>
       <a href="{{ site.github }}{{ post.relative_url }}">
         {{ post.title }}
       </a>
