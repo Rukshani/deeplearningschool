@@ -5,6 +5,10 @@ published: true
 ---
 
 
+    
+     
+    
+
 **Chapter 1: Introduction**
 * 1.0: [Why Artifical Intelligence](https://nikcheerla.github.io/deeplearningschool/2017/08/08/ch1-0intro/)
 * 1.1: [Setup](https://nikcheerla.github.io/deeplearningschool/2017/09/08/ch1.1-Setup/)
