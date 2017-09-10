@@ -10,7 +10,7 @@ title:            On AI
 tagline:          'How I Learned To Stop Worrying And Love Stochastic Gradient Descent'
 description:      'A practical guide to deep learning: for Python hackers, data scientists, the chronically-impatient, and the AI researchers of the future.'
 url:              https://github.com/nikcheerla/deeplearningschool
-baseurl:          ""
+baseurl:          "/"
 
 author:
   name:           'Nikhil Cheerla'
