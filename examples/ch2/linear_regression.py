@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import random
 
-url = "https://raw.githubusercontent.com/nikcheerla/deeplearningschool/master/data/housing.csv"
+url = "https://raw.githubusercontent.com/nikcheerla/deeplearningschool/master/examples/data/housing.csv"
 data = pd.read_csv(url)
 area = data["Square Feet (Millions)"]
 price = data["Price ($, Millions)"]
