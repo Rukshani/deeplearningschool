@@ -4,6 +4,9 @@ title: Table Of Contents
 published: true
 ---
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+
+Chapter 1:
+1.0: [Why Artifical Intelligence](https://nikcheerla.github.io/deeplearningschool/2017/08/08/ch1-0intro/)
+1.1: [Setup](1.1: Setup)
+1.2: [Models, Goals, and Learning](https://nikcheerla.github.io/deeplearningschool/2017/09/08/ch1.2-models-goals-learning/)
+
