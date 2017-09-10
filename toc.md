@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: Table Of Contents
 published: true
 ---
 
