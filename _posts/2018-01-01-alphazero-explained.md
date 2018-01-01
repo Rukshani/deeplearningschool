@@ -1,8 +1,10 @@
 ---
-published: false
+published: true
 ---
 
 
+
+## THey call it alphazero, and it comes with pie
 ![435117.jpg]({{site.baseurl}}/media/435117.jpg)
 
 Linear relationships are some of the simplest possible connections between two
