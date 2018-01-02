@@ -3,18 +3,12 @@ published: true
 ---
 
 
-
-## THey call it alphazero, and it comes with pie
 ![435117.jpg]({{site.baseurl}}/media/435117.jpg)
 
-Linear relationships are some of the simplest possible connections between two
-variables — yet they show up surprisingly often in nature. If the mass of an
-object doubles, then the force of gravity on it doubles as well. If the current
-through a copper wire is halved, the voltage is halved as well.
 
-Linear relationships are also relatively easy to see and characterize in data.
-Anyone can draw a line through points on a scatterplot. But how do we train a
-program to do the same?
+If you follow the AI world, you've probably heard about AlphaGo, Google DeepMind's revolutionary program to play the game of Go better than the grandmasters. Go was once thought impossible for machines to play: it has more board positions ($$10^17010170$$) than there are atoms in the universe.
+
+
 
 ### Data
 
