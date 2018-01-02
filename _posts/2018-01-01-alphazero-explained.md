@@ -107,7 +107,8 @@ def ai_best_move(game):
     return max(action_dict, key=action_dict.get)
 ~~~
 
-Now, clearly this estimate of value is inaccurate.
 
+
+Clearly, Monte Carlo search doesn't choose the optimal move. In fact, it often doesn't even come close, as illustrated in the example below. The key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent.
 
 
