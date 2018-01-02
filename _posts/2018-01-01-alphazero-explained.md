@@ -21,7 +21,11 @@ The algorithm that is a **radical simplification** of AlphaGo, so much simpler t
 
 ### General Game-Playing Terminology
 
-In game theory, chess and Go are examples of games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty. A non-obvious corollary of the perfect information game is that there is only one set of optimal _strategies_ to win a general perfect-information game. The only optimal strategies are those that always win when your opponent is also playing optimally. 
+In game theory, chess and Go are examples of games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty.  
+
+Because both players have perfect information, it is clear that every position in a classical game is either **winnable** or **unwinnable**.  Either the player just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). 
+
+If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact it is easy to determine whether a game is winnable using this recursive definition. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do this. Note that we just use general methods that could apply to any game 
 
 
 ~~~ python
