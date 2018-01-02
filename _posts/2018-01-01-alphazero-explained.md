@@ -21,25 +21,25 @@ The algorithm that is a **radical simplification** of AlphaGo, so much simpler t
 
 ### General Game-Playing Terminology
 
-General
-
+In game theory, chess and Go are examples of games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty. A non-obvious corollary of the perfect information game is that there is only one set of optimal _strategies_ to win a general perfect-information game. The only optimal strategies are those that always win when your opponent is also playing optimally. 
 
 
 ~~~ python
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import random
+from games.games import AbstractGame
 
-url = "https://raw.githubusercontent.com/nikcheerla/deeplearningschool/master/examples/data/housing.csv"
-data = pd.read_csv(url)
+def winnable(game):
 
-area = data["Square Feet (Millions)"]
-price = data["Price ($, Millions)"]
-
-sns.jointplot(area, price);
-plt.show()
+	if game.over():
+    	return False
+    
+	for move in game.valid_moves():
+    	game.make_move(move)
+        p2win = winnable(game)
+        game.undo_move()
+        if not p2win:
+        	return True
+    
+   	return False
 ~~~
 
 
