@@ -66,5 +66,45 @@ In fact, this simple AI can play tic-tac-toe optimally - it will always either w
 
 
 
+### Monte-Carlo Tree Search
+
+
+So does this mean that we've solved all two-player classical games? Not quite.  Although the recursion above looks simple, it actually ends up checking all possible game states reachable from a given position in order to compute the value of a state. Thus, even though there do exist optimal strategies for complex games like chess and Go, their **game trees** are so intractably large that it would be impossible to find them.
+
+(Representation of Go game tree)
+
+We need a faster way to approximate the value of a given game state. What if, instead of making the players choose optimal moves, we computed the value of a state by making the players choose _random_ moves from there on, and seeing who wins more? 
+
+
+~~~ python
+import random
+from games.games import AbstractGame
+
+def value(game):
+    if game.over():
+        return game.score()
+    
+    state_values = []
+    move = random.choice(game.valid_moves())
+    game.make_move(move)
+    state_values.append(-value(game)) 
+    game.undo_move()
+	
+    # The player always chooses the optimal move: the best possible achievable state
+    return max(state_values)
+
+def ai_best_move(game):
+	
+    action_dict = {}
+    for move in game.valid_moves():
+        game.make_move(move)
+        action_dict[move] = -value(game)
+        game.undo_move()
+
+    return max(action_dict, key=action_dict.get)
+~~~
+
+Now, clearly this estimate of value is inaccurate.
+
 
 
