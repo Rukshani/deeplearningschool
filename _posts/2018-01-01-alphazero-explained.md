@@ -6,7 +6,9 @@ published: true
 ![435117.jpg]({{site.baseurl}}/media/435117.jpg)
 
 
-If you follow the AI world, you've probably heard about AlphaGo, Google DeepMind's revolutionary program to play the game of Go better than the grandmasters. Go was once thought impossible for machines to play: it has more board positions ($$10^17010170$$) than there are atoms in the universe.
+If you follow the AI world, you've probably heard about AlphaGo. 
+
+The ancient Chinese game of Go was once thought impossible for machines to play. It has more board positions ($$10^17010170$$) than there are atoms in the universe. The top grandmasters regularly trounced the best computer Go programs with absurd (10 or 15 stone!) handicaps, justifying their decisions in terms of abstract strategic concepts -- _joseki, fuseki, sente, tenuki, balance_ -- that they believed computers would never be able to learn. But 
 
 
 
