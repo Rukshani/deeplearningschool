@@ -112,8 +112,28 @@ def ai_best_move(game):
 Clearly, Monte Carlo search doesn't choose the optimal move. In fact, it often doesn't even come close, as illustrated in the example below. The key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
 
 
-### Monte-Carlo Tree Search
+### Upper-Confidence Bounds Applied to Trees (UCT)
 
-One way to fix this problem is to make the opponent move selections more intelligent. Rather than
+One way to fix this problem is to make the opponent move selections more intelligent. Rather than having the opponent choose their move randomly, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**.
+
+Looking at this problem from the perspective of the opponent, each move is a complete black box; almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance exploring and testing the slot machines (and of course recording statistics) with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way.
+
+Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
+
+> Imagine, if you will, that you are faced with a row of slot machines, each with different payout probabilities and amounts. As a rational person (if you are going to play them at all), you would prefer to use a strategy that will allow you to maximize your net gain. But how can you do that? For whatever reason, there is no one nearby, so you can't watch someone else play for a while to gain information about which is the best machine. Clearly, your strategy is going to have to balance playing all of the machines to gather that information yourself, with concentrating your plays on the observed best machine. One strategy, called UCB1, does this by constructing statistical confidence intervals for each machine.
+
+x¯i±2lnnni‾‾‾‾‾‾√
+x¯i±2ln⁡nni
+where:
+
+x¯ix¯i: the mean payout for machine ii
+nini: the number of plays of machine ii
+nn: the total number of plays
+
+
+
+
+
+
 
 
