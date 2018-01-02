@@ -73,32 +73,35 @@ So does this mean that we've solved all two-player classical games? Not quite.  
 
 (Representation of Go game tree)
 
-We need a faster way to approximate the value of a given game state. What if, instead of making the players choose optimal moves, we computed the value of a state by making the players choose _random_ moves from there on, and seeing who wins more? 
-
+We need a faster way to approximate the value of a given game state. What if, instead of making the players choose optimal moves, we computed the value of a state by making the players choose _random_ moves from there on, and seeing who wins? This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a $monte_carlo_value()$ function that estimates the value of a state using a given number of random playouts.
 
 ~~~ python
 import random
+import numpy as np
 from games.games import AbstractGame
 
-def value(game):
+def playout(game):
     if game.over():
-        return game.score()
+        return -game.score()
     
     state_values = []
     move = random.choice(game.valid_moves())
     game.make_move(move)
-    state_values.append(-value(game)) 
+    value = -value(game))
     game.undo_move()
 	
-    # The player always chooses the optimal move: the best possible achievable state
-    return max(state_values)
+    return value
+
+def monte_carlo_value(game, N=100):
+	scores = [playout(game) for i in range(0, N)]
+    return np.mean(scores)
 
 def ai_best_move(game):
 	
     action_dict = {}
     for move in game.valid_moves():
         game.make_move(move)
-        action_dict[move] = -value(game)
+        action_dict[move] = -monte_carlo_value(game)
         game.undo_move()
 
     return max(action_dict, key=action_dict.get)
