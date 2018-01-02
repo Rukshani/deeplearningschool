@@ -25,7 +25,7 @@ In game theory, chess and Go are examples of games with _perfect information_; b
 
 Because both players have perfect information, it is clear that every position in a classical game is either **winnable** or **unwinnable**.  Either the player just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). 
 
-If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact it is easy to determine whether a game is winnable using this recursive definition. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do this. Note that we just use general methods that could apply to any game 
+If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact it is easy to determine whether a game is winnable using a recursive definition of winnability. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do just this. Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game, whether something as simple as Tic-Tac-Toe or as complex as chess or Go.
 
 
 ~~~ python
