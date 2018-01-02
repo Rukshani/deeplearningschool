@@ -21,9 +21,9 @@ The algorithm that is a **radical simplification** of AlphaGo, so much simpler t
 
 ### General Game-Playing Terminology
 
-In game theory, chess and Go are examples of games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty.  
+In game theory, chess and Go are examples of turn-based, two-player games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty.  
 
-Because both players have perfect information, it is clear that every position in a classical game is either **winnable** or **unwinnable**.  Either the player just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). 
+Because both players have perfect information, it is clear that every position in a classical game is either **winnable** or **unwinnable**.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). 
 
 If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact it is easy to determine whether a game is winnable using a recursive definition of winnability. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do just this. Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game, whether something as simple as Tic-Tac-Toe or as complex as chess or Go.
 
@@ -32,18 +32,20 @@ If this definition makes you shout "Recursion!", then your instincts are on the 
 from games.games import AbstractGame
 
 def winnable(game):
-
-	if game.over():
-    	return False
+    if game.over():
+        return False
     
-	for move in game.valid_moves():
-    	game.make_move(move)
+    for move in game.valid_moves():
+        game.make_move(move)
         p2win = winnable(game)
         game.undo_move()
         if not p2win:
-        	return True
-    
-   	return False
+            return True
+
+    return False
 ~~~
+
+Now, how can we make player 
+
 
 
