@@ -112,8 +112,8 @@ def ai_best_move(game):
 Clearly, Monte Carlo search doesn't choose the optimal move. In fact, it often doesn't even come close, as illustrated in the example below. The key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
 
 
+### Monte-Carlo Tree Search
 
-
-One way to fix this problem is to make the opponent move selections more intelligent.
+One way to fix this problem is to make the opponent move selections more intelligent. Rather than
 
 
