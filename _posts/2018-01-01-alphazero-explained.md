@@ -93,7 +93,7 @@ def playout(game):
     return value
 
 def monte_carlo_value(game, N=100):
-	scores = [playout(game) for i in range(0, N)]
+    scores = [playout(game) for i in range(0, N)]
     return np.mean(scores)
 
 def ai_best_move(game):
