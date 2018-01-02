@@ -46,7 +46,7 @@ def value(game):
     return max(state_values)
 ~~~
 
-Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the highest resultant score.
+Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the highest resultant score. We call this the DFS approach because, to choose a move, we are essentially doing depth-first search on the tree of possible game states.
 
 ~~~ python
 
@@ -61,7 +61,7 @@ def ai_best_move(game):
     return max(action_dict, key=action_dict.get)
 ~~~
 
-In fact, this simple AI can play tic-tac-toe optimally - it will always either win or draw, as can be seen in the following GIF.
+In fact, this simple AI can play tic-tac-toe optimally - it will always either win or draw with anyone it plays.
 
 
 
@@ -120,7 +120,7 @@ Looking at this problem from the perspective of the opponent, each move is a com
 
 Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
 
-> Imagine, if you will, that you are faced with a row of slot machines, each with different payout probabilities and amounts. As a rational person (if you are going to play them at all), you would prefer to use a strategy that will allow you to maximize your net gain. But how can you do that? For whatever reason, there is no one nearby, so you can't watch someone else play for a while to gain information about which is the best machine. Clearly, your strategy is going to have to balance playing all of the machines to gather that information yourself, with concentrating your plays on the observed best machine. One strategy, called UCB1, does this by constructing statistical confidence intervals for each machine.
+> Imagine, if you will, that you are faced with a row of slot machines, each with different (unknown) payout probabilities and amounts. As a rational person (if you are going to play them at all), you would prefer to use a strategy that will allow you to maximize your net gain. But how can you do that? ... Clearly, your strategy is going to have to balance playing all of the machines to gather that information yourself, with concentrating your plays on the observed best machine. One strategy, called UCB1, does this by constructing statistical confidence intervals for each machine.
 
 > $$x_i \pm \sqrt{\frac{2\ln{N}}{n_i}}$$
 
@@ -129,7 +129,9 @@ Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
 > - $n_i$: the number of plays of machine ii
 > - $N$: the total number of plays
 
+> Then, your strategy is to pick the machine with the highest upper bound each time. As you do so, the observed mean value for that machine will shift and its confidence interval will become narrower, but all of the other machines' intervals will widen. Eventually, one of the other machines will have an upper bound that exceeds that of your current one, and you will switch to that one. This strategy has the property that your regret, the difference between what you would have won by playing solely on the actual best slot machine and your expected winnings under the strategy that you do use, grows only as $O(\ln⁡{n})$.
 
+Whereas the 
 
 
 
