@@ -73,7 +73,7 @@ So does this mean that we've solved all two-player classical games? Not quite.  
 
 (Representation of Go game tree)
 
-We need a faster way to approximate the value of a given game state. What if, instead of making the players choose optimal moves, we computed the value of a state by making the players choose _random_ moves from there on, and seeing who wins? This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a $monte_carlo_value()$ function that estimates the value of a state using a given number of random playouts.
+We need a faster way to approximate the value of a given game state. What if, instead of making the players choose optimal moves, we computed the value of a state by making the players choose _random_ moves from there on, and seeing who wins? This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts.
 
 ~~~ python
 import random
@@ -109,6 +109,11 @@ def ai_best_move(game):
 
 
 
-Clearly, Monte Carlo search doesn't choose the optimal move. In fact, it often doesn't even come close, as illustrated in the example below. The key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent.
+Clearly, Monte Carlo search doesn't choose the optimal move. In fact, it often doesn't even come close, as illustrated in the example below. The key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
+
+
+
+
+One way to fix this problem is to make the opponent move selections more intelligent.
 
 
