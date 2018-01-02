@@ -122,13 +122,12 @@ Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
 
 > Imagine, if you will, that you are faced with a row of slot machines, each with different payout probabilities and amounts. As a rational person (if you are going to play them at all), you would prefer to use a strategy that will allow you to maximize your net gain. But how can you do that? For whatever reason, there is no one nearby, so you can't watch someone else play for a while to gain information about which is the best machine. Clearly, your strategy is going to have to balance playing all of the machines to gather that information yourself, with concentrating your plays on the observed best machine. One strategy, called UCB1, does this by constructing statistical confidence intervals for each machine.
 
-x¯i±2lnnni‾‾‾‾‾‾√
-x¯i±2ln⁡nni
+$$x_i \pm \sqrt{\frac{2\ln{N}}{n_i}}$$
 where:
 
-x¯ix¯i: the mean payout for machine ii
-nini: the number of plays of machine ii
-nn: the total number of plays
+$x_i$: the mean payout for machine i
+$n_i$: the number of plays of machine ii
+$N$: the total number of plays
 
 
 
