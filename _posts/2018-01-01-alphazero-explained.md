@@ -114,13 +114,13 @@ Clearly, Monte Carlo search doesn't choose the optimal move. In fact, it often d
 
 ### Upper-Confidence Bounds Applied to Trees (UCT)
 
-One way to fix this problem is to make the opponent move selections more intelligent. Rather than having the opponent choose their move randomly, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**.
+One way to fix this problem is to make the opponent move selections more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**.
 
 Looking at this problem from the perspective of the opponent, each move is a complete black box; almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance exploring and testing the slot machines (and of course recording statistics) with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way.
 
 Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
 
-> Imagine, if you will, that you are faced with a row of slot machines, each with different (unknown) payout probabilities and amounts. As a rational person (if you are going to play them at all), you would prefer to use a strategy that will allow you to maximize your net gain. But how can you do that? ... Clearly, your strategy is going to have to balance playing all of the machines to gather that information yourself, with concentrating your plays on the observed best machine. One strategy, called UCB1, does this by constructing statistical confidence intervals for each machine.
+> Imagine ... that you are faced with a row of slot machines, each with different (unknown) payout probabilities and amounts. As a rational person (if you are going to play them at all), you would prefer to use a strategy that will allow you to maximize your net gain. But how can you do that? ... Clearly, your strategy is going to have to balance playing all of the machines to gather that information yourself, with concentrating your plays on the observed best machine. One strategy, called UCB1, does this by constructing statistical confidence intervals for each machine.
 
 > $$x_i \pm \sqrt{\frac{2\ln{N}}{n_i}}$$
 
@@ -131,7 +131,93 @@ Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
 
 > Then, your strategy is to pick the machine with the highest upper bound each time. As you do so, the observed mean value for that machine will shift and its confidence interval will become narrower, but all of the other machines' intervals will widen. Eventually, one of the other machines will have an upper bound that exceeds that of your current one, and you will switch to that one. This strategy has the property that your regret, the difference between what you would have won by playing solely on the actual best slot machine and your expected winnings under the strategy that you do use, grows only as $O(\ln⁡{n})$.
 
-Whereas the 
+Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. 
+
+Thus, when we write code to represent UCT, we need to make a record of the states we visit and their values.
+
+~~~ python
+
+class MCTSController(object):
+
+	def __init__(self, manager, T=0.3, C=1.5):
+		super().__init__()
+
+		self.visits = manager.dict()
+		self.differential = manager.dict()
+		self.T = T
+		self.C = C
+
+	def record(self, game, score):
+		self.visits["total"] = self.visits.get("total", 1) + 1
+		self.visits[hashable(game.state())] = self.visits.get(hashable(game.state()), 0) + 1
+		self.differential[hashable(game.state())] = self.differential.get(hashable(game.state()), 0) + score
+
+	r"""
+	Evaluates the "value" of a state as a bandit problem, using the value + exploration heuristic.
+	"""
+	def heuristic_value(self, game):
+		N = self.visits.get("total", 1)
+		Ni = self.visits.get(hashable(game.state()), 1e-9)
+		V = self.differential.get(hashable(game.state()), 0)*1.0/Ni 
+		return V + self.C*(np.log(N)/Ni)
+
+	r"""
+	Runs a single, random heuristic guided playout starting from a given state. This updates the 'visits' and 'differential'
+	counts for that state, as well as likely updating many children states.
+	"""
+	def playout(self, game, expand=150):
+
+		if expand == 0 or game.over():
+			score = game.score()
+			self.record(game, score)
+			#print ('X' if game.turn==1 else 'O', score)
+			return score
+
+		action_mapping = {}
+
+		for action in game.valid_moves():
+			
+			game.make_move(action)
+			action_mapping[action] = self.heuristic_value(game)
+			game.undo_move()
+
+		chosen_action = sample(action_mapping, T=self.T)
+		game.make_move(chosen_action)
+		score = -self.playout(game, expand=expand-1) #play branch
+		game.undo_move()
+		self.record(game, score)
+
+		return score
+
+	r"""
+	Evaluates the "value" of a state by randomly playing out games starting from that state and noting the win/loss ratio.
+	"""
+	def value(self, game, playouts=100, steps=5):
+
+		# play random playouts starting from that game value
+		with Pool() as p:
+			scores = p.map(self.playout, [game.copy() for i in range(0, playouts)])
+
+		return self.differential[hashable(game.state())]*1.0/self.visits[hashable(game.state())]
+
+	r"""
+	Chooses the move that results in the highest value state.
+	"""
+	def best_move(self, game, playouts=100):
+
+		action_mapping = {}
+
+		for action in game.valid_moves():
+			game.make_move(action)
+			action_mapping[action] = self.value(game, playouts=playouts)
+			game.undo_move()
+
+		print ({a: "{0:.2f}".format(action_mapping[a]) for a in action_mapping})
+		return max(action_mapping, key=action_mapping.get)
+
+~~~
+
+
 
 
 
