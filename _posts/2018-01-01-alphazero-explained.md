@@ -133,7 +133,7 @@ Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
 
 Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. 
 
-Thus, when we write code to represent UCT, we need to make a record of the states we visit and their values.
+Thus, when we write code to represent UCT, we need to make a record of the states we visit and their values. We can let the algorithm play games against itself and watch it slowly improve.
 
 ~~~ python
 
@@ -180,7 +180,8 @@ class MCTSController(object):
 			game.make_move(action)
 			action_mapping[action] = self.heuristic_value(game)
 			game.undo_move()
-
+		
+        # Instead of choosing a move randomly, we choose it using the exploration heuristic
 		chosen_action = sample(action_mapping, T=self.T)
 		game.make_move(chosen_action)
 		score = -self.playout(game, expand=expand-1) #play branch
@@ -217,8 +218,20 @@ class MCTSController(object):
 
 ~~~
 
+A key component of the success of UCT is how it allows for the construction of **lopsided exploration trees**. In complex games like chess and Go, there are an incomprehensible number of states, but most of them are unimportant because they can only be reached if one or both players play extremely badly. Using UCT, you can avoid exploring out these "useless" states and focus most of your computational energy on simulating games in the interesting portion of the state space. For a visualization of this see below.
 
 
+### Deep Neural Networks As Heuristic Approximators
+
+
+
+
+
+
+
+
+
+### The Secret Factor: Compute Time
 
 
 
