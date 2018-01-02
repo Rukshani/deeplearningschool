@@ -25,7 +25,7 @@ In game theory, chess and Go are examples of turn-based, two-player games with _
 
 Because both players have perfect information, it is clear that every position in a classical game is either **winnable** or **unwinnable**.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible **values** for a given state: either it is a guaranteed loss, a guaranteed win, or a guaranteed draw.
 
-If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact it is easy to determine the value of a game state using a self-referential definition of winnability. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do just this. We represent a guaranteed loss for the player about to play with $-1$, a guaranteed win with $1$, and a draw with $0$.  Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game, whether something as simple as Tic-Tac-Toe or as complex as chess or Go.
+If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact, it is easy to determine the value of a game state using a self-referential definition of winnability. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do just this. We represent a guaranteed loss for the player about to play with $-1$, a guaranteed win with $1$, and a draw with $0$.  Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game, whether something as simple as Tic-Tac-Toe or as complex as chess or Go.
 
 
 ~~~ python
@@ -55,11 +55,14 @@ def ai_best_move(game):
     action_dict = {}
     for move in game.valid_moves():
         game.make_move(move)
-        action_dict[move] = value(game)
+        action_dict[move] = -value(game)
         game.undo_move()
 
     return max(action_dict, key=action_dict.get)
 ~~~
+
+In fact, this simple AI can play tic-tac-toe optimally - it will always either win or draw, as can be seen in the following GIF.
+
 
 
 
