@@ -46,24 +46,22 @@ def value(game):
     return max(state_values)
 ~~~
 
-Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the 
+Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the highest resultant score.
 
 ~~~ python
-from games.games import AbstractGame
 
-def winnable(game):
-    if game.over():
-        return False
-    
+def ai_best_move(game):
+	
+    action_dict = {}
     for move in game.valid_moves():
         game.make_move(move)
-        p2win = winnable(game)
+        action_dict[move] = value(game)
         game.undo_move()
-        if not p2win:
-            return True
 
-    return False
+    return max(action_dict, key=action_dict.get)
 ~~~
+
+
 
 
 
