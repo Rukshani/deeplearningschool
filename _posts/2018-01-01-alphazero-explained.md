@@ -15,27 +15,32 @@ Demis Hassabis and his team at DeepMind believed otherwise. And they spent three
 ![go.jpg]({{site.baseurl}}/media/alphago.jpg)
 {:caption}
 
-But I'm not here to talk about AlphaGo in this blog post. I'm here to discuss AlphaZero, the algorithm some DeepMind researchers released a year later. The algorithm that uses NO previous information or human-played games whatsoever, knowing nothing but the rules of the game. The algorithm that was able to handily beat the original version of AlphaGo in only four hours (?) of training time. The algorithm that can be applied without modification to chess, Shogi, and (AI researchers believe) almost any game with perfect information and no randomness.
+But I'm not here to talk about AlphaGo. I'm here to discuss AlphaZero, the algorithm some DeepMind researchers released a year later. The algorithm that uses NO previous information or human-played games whatsoever, knowing nothing but the rules of the game. The algorithm that was able to handily beat the original version of AlphaGo in only four hours (?) of training time. The algorithm that can be applied without modification to chess, Shogi, and (AI researchers believe) almost any game with perfect information and no randomness.
 
-If AlphaGo is a story about human underdogs and 
+AlphaGo is, at its heart, a story about human underdogs beating the odds -- applying new techniques 
 
 The algorithm that is a **radical simplification** of AlphaGo, so much simpler that even a lowly blogger like me is able to explain it and teach YOU how to code it. At least, that's the idea.
 
 
 
 
-### General Game-Playing Terminology
+### General Game-Playing
 
 In game theory, chess and Go are examples of turn-based, two-player games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty.  
 
-Because both players have perfect information, it is clear that every position in a classical game is either **winnable** or **unwinnable**.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible **values** for a given state: either it is a guaranteed loss, a guaranteed win, or a guaranteed draw.
+Because both players have perfect information, it is clear that every position in a classical game is either **winnable** or **unwinnable**.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible **values** for a given state: either it is a guaranteed loss (-1), a guaranteed win (+1), or a guaranteed draw (0).
 
-If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact, it is easy to determine the value of a game state using a self-referential definition of winnability. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do just this. We represent a guaranteed loss for the player about to play with $-1$, a guaranteed win with $1$, and a draw with $0$.  Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game, whether something as simple as Tic-Tac-Toe or as complex as chess or Go.
+If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact, it is easy to determine the value of a game state using a self-referential definition of winnability. We can write some Python code, using the `AbstractGame` template that I've defined in this file, to do just this. Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game, whether something as simple as Tic-Tac-Toe or as complex as chess or Go.
 
 
 ~~~ python
 from games.games import AbstractGame
 
+r"""
+Returns -1 if a game is a guaranteed loss for the player
+just about to play, +1 is the game is a guaranteed victory
+and 0 for a draw.
+"""
 def value(game):
     if game.over():
         return -game.score()
@@ -43,11 +48,12 @@ def value(game):
     state_values = []
     for move in game.valid_moves():
         game.make_move(move)
-        # guaranteed win for P2 is guaranteed loss for P1, so we flip the values
+        # guaranteed win for P2 is loss for P1, so we flip values
         state_values.append(-value(game)) 
         game.undo_move()
 	
-    # The player always chooses the optimal move: the best possible achievable state
+    # The player always chooses the optimal game state
+    # +1 (win) if possible, otherwise draw, then loss
     return max(state_values)
 ~~~
 
