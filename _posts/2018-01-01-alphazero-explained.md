@@ -32,14 +32,14 @@ In game theory, chess and Go are examples of turn-based, two-player games with _
 
 Because both players have perfect information, it is clear that every position in a classical game is either winnable or unwinnable.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible values for a given state: either it is a guaranteed loss **(-1)**, a guaranteed win **(+1)**, or a guaranteed draw **(0)**.
 
-If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact, it is easy to determine the value of a game state using a self-referential definition of winnability. We can write some Python code, using my [predefined](https://github.com/nikcheerla/alphazero/tree/master/games) `AbstractGame` class. Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game, whether something as simple as Tic-Tac-Toe or as complex as chess or Go.
+If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact, it is easy to determine the value of a game state using a self-referential definition of winnability. We can write some Python code, using my [predefined](https://github.com/nikcheerla/alphazero/tree/master/games) `AbstractGame` class. Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game.
 
 
 ~~~ python
 from games.games import AbstractGame
 from games.tictactoe import TicTacToeGame
 from games.chess import ChessGame
-from games.chess import ChessGame
+from games.gomoku import GomokuGame
 
 r"""
 Returns -1 if a game is a guaranteed loss for the player
@@ -98,7 +98,10 @@ A simulated game between two AIs using DFS. Since both AIs always pick an optima
 
 So does this mean that we've solved all two-player classical games? Not quite.  Although the recursion above looks simple, it actually ends up checking all possible game states reachable from a given position in order to compute the value of a state. Thus, even though there do exist optimal strategies for complex games like chess and Go, their **game trees** are so intractably large that it would be impossible to find them.
 
+![branching.jpg]({{site.baseurl}}/media/branching.jpg)
 
+{:.image-caption}
+Branching paths in the game of Go.
 
 We need a faster way to approximate the value of a given game state. What if, instead of making the players choose optimal moves, we computed the value of a state by making the players choose _random_ moves from there on, and seeing who wins? This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts.
 
