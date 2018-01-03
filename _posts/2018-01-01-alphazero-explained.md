@@ -221,7 +221,9 @@ class MCTSController(object):
 A key component of the success of UCT is how it allows for the construction of **lopsided exploration trees**. In complex games like chess and Go, there are an incomprehensible number of states, but most of them are unimportant because they can only be reached if one or both players play extremely badly. Using UCT, you can avoid exploring out these "useless" states and focus most of your computational energy on simulating games in the interesting portion of the state space. For a visualization of this see below.
 
 
-### Deep Neural Networks As Heuristic Approximators
+### AlphaGo: Deep Learning Game Heuristics
+
+
 
 
 
