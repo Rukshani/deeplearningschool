@@ -13,7 +13,8 @@ The ancient Chinese game of Go was once thought impossible for machines to play.
 Demis Hassabis and his team at DeepMind believed otherwise. And they spent three years painstaking years trying to prove this belief; collecting Go data from expert databases, tuning deep neural network architectures, and developing hybrid strategies honed against people as well as machines. Eventually, their efforts culminated in a dizzyingly complex, strategic program they called AlphaGo, trained using millions of hours of CPU and TPU time, able to compete with the best of the best Go players. They set up a match between AlphaGo and grandmaster Lee Sedol ... and the rest is history.
 
 ![go.jpg]({{site.baseurl}}/media/alphago.jpg)
-{:caption}
+{:.image-caption}
+The highly publicized match between Lee Sedol, 9th dan Go grandmaster, and AlphaGo. Google DeepMind's program won 4 out of 5 games.
 
 But I'm not here to talk about AlphaGo. I'm here to discuss AlphaZero, the algorithm some DeepMind researchers released a year later. The algorithm that uses NO previous information or human-played games whatsoever, knowing nothing but the rules of the game. The algorithm that was able to handily beat the original version of AlphaGo in only four hours (?) of training time. The algorithm that can be applied without modification to chess, Shogi, and (AI researchers believe) almost any game with perfect information and no randomness.
 
