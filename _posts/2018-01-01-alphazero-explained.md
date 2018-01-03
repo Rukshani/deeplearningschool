@@ -221,11 +221,12 @@ class MCTSController(object):
 A key component of the success of UCT is how it allows for the construction of **lopsided exploration trees**. In complex games like chess and Go, there are an incomprehensible number of states, but most of them are unimportant because they can only be reached if one or both players play extremely badly. Using UCT, you can avoid exploring out these "useless" states and focus most of your computational energy on simulating games in the interesting portion of the state space. For a visualization of this see below.
 
 
-### AlphaGo: Deep Learning Game Heuristics
+### AlphaZero: Deep Learning Game Heuristics
 
+Given enough playouts, UCT will be able to explore all of the important game positions in any game (spending far less time on states that tend not to occur in intelligent play) and and determine their values using the Monte Carlo Method. But the amount of playouts needed in chess and Go for this to happen is computationally infeasible, even with the UCT prioritization; thus, most viable MCTS engines for these games end up exploiting a lot of domain-specific knowledge and heuristics.
 
-
-
+To see why, look at the diagram below. The first and second chess game are completely different in terms of the positions of pieces, but the essential components of the "situation" are the same; a black bishop supported by a black knight is checking a white king. The differences in symmetry and pawn ordering are mostly irrelevant. Yet, to the UCT algorithm, the two chess games are completely different states, and even if UCT has thoroughly "explored" game #1 and knows that it is a +0.2 advantage for black, it has to start from scratch when exploring game #2.
+What if you could train a network to predict 
 
 
 
