@@ -3,7 +3,6 @@ published: true
 ---
 
 
-![435117.jpg]({{site.baseurl}}/media/435117.jpg)
 ![go.jpg]({{site.baseurl}}/media/go.jpg)
 
 
