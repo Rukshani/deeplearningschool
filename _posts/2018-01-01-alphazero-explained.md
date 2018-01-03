@@ -61,15 +61,21 @@ Now, how can we create an AI that always chooses the "best move"? We simply tell
 
 ~~~ python
 
+r"""
+Chooses optimal move to play; ideally plays
+moves that result in -1 valued states for the opponent 
+(opponent loses), but will pick draws or opponent victories
+if necessary.
+"""
 def ai_best_move(game):
 	
     action_dict = {}
     for move in game.valid_moves():
         game.make_move(move)
-        action_dict[move] = -value(game)
+        action_dict[move] = value(game)
         game.undo_move()
 
-    return max(action_dict, key=action_dict.get)
+    return min(action_dict, key=action_dict.get)
 ~~~
 
 In fact, this simple AI can play tic-tac-toe optimally - it will always either win or draw with anyone it plays.
