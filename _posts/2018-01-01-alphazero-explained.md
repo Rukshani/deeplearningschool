@@ -255,8 +255,9 @@ def monte_carlo_value(game, N=100):
 A key component of the success of UCT is how it allows for the construction of **lopsided exploration trees**. In complex games like chess and Go, there are an incomprehensibly large number of states, but most of them are unimportant because they can only be reached if one or both players play extremely badly. Using UCT, you can avoid exploring out these "useless" states and focus most of your computational energy on simulating games in the interesting portion of the state space, as the diagram below shows.
 
 ![lopsided.png]({{site.baseurl}}/media/lopsided.png)
+
 {:.image-caption}
-The state
+UCT explores the state space of possible moves in a fundamentally asymmetric way, prioritizing those moves that seem to end in good outcome.
 
 
 
