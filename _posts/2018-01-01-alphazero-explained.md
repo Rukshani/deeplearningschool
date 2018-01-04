@@ -241,6 +241,10 @@ def playout(game):
     
     return value
 
+r"""
+Finds the expected value of a game by running the specified number
+of UCT simulations. Used in ai_best_move()
+"""
 def monte_carlo_value(game, N=100):
     scores = [playout(game) for i in range(0, N)]
     return np.mean(scores)
