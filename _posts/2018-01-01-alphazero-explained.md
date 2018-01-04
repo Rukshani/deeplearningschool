@@ -28,7 +28,25 @@ The algorithm that is a **radical simplification** of AlphaGo, so much simpler t
 
 ### General Game-Playing and DFS
 
-In game theory, chess and Go are examples of turn-based, two-player games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty. We call games like these **classical games**.
+In game theory, rather than reason about specific games, mathematicians like to reason about a special class of games: turn-based, two-player games with _perfect information_. In these games, both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty. We call games like these **classical games**.
+
+These are examples of classical games:
+- Tic-Tac-Toe
+- Chess
+- Go
+- [Gomoku](https://en.wikipedia.org/wiki/Gomoku) (a 5-in a row game on a 19 by 19 go board)
+- [Mancala](https://en.wikipedia.org/wiki/Mancala)
+
+whereas these games are not:
+- Poker (and most other card games)
+- Rock-Paper-Scissors
+- [The Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma)
+- Video games like Starcraft
+
+
+
+
+
 
 Because both players have perfect information, it is clear that every position in a classical game is either winnable or unwinnable.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible values for a given state: either it is a guaranteed loss **(-1)**, a guaranteed win **(+1)**, or a guaranteed draw **(0)**.
 
