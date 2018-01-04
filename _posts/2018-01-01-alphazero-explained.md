@@ -362,7 +362,7 @@ It turns out this is really all there is to the core AlphaZero algorithm, except
 ![]({{site.baseurl}}/media/alphago_arch.png)![alphago_arch.png]
 
 {:.image-caption}
-The architecture of AlphaZero 
+The architecture of AlphaZero as applied to Go. Note that the network layout, especially the input layers, must be game specific, so chess, for example, would use a different DCNN architecture.
 
 
 
