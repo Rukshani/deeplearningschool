@@ -23,7 +23,7 @@ If computer programs could feel humilitation, AlphaZero would be making every co
 
 > "A few years ago I commented to a chess engine developer that the methods of compensating for which side makes the last move in board evaluation seem a bit like slaughtering a chicken under a full moon, and he responded ‘Chess engines slaughter millions of chickens per second‘." -- [Bram Cohen](https://medium.com/@bramcohen/alphazeros-real-secret-sauce-is-mcts-b6f238d95374)
 
-Improving these programs required ekeing out more efficiency from the underlying hardware and making tiny but arcane changes to various interlocking factors and scores. AlphaZero saw the cutthroat, hypercompetitive ecosystem of competitive game-playing, forged through hundreds of thousands of hours of programmer effort, and decided that it was a problem worth spending just _four hours_ on. That's gotta hurt.
+Improving these programs required ekeing out more efficiency from the underlying hardware and making tiny but arcane changes to various interlocking factors and scores. AlphaZero saw the cutthroat, hypercompetitive ecosystem of competitive game-playing, forged through hundreds of thousands of hours of programmer effort and watered by the blood of millions of "slaughtered chickens", and decided that it was a problem worth spending just _four hours_ on. That's gotta hurt.
 
 And to add insult to injury, AlphaZero is a _radically_ simple algorithm. It's so simple that even a lowly blogger like me should be able to explain it and teach YOU how to code it. At least, that's the idea.
 
