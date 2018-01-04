@@ -169,7 +169,7 @@ To see this, we're going to have to scale up to a significantly more complicated
 ![gomoku-fail.png]({{site.baseurl}}/media/gomoku-fail.png)
 
 {:.image-caption}
-The position above looks good for black from the MCTS perspective. If both white and black are playing randomly, then white only has a $$\frac{1}{361}$$ chance to pick a game-ending move, while black has a $$\frac{7}{361}$$ chance to retaliate with a 5-in-a-row choice. But despite this evaluation, any competent player with white would obviously pick the game-ending strategy, so this position should evaluate as overwhelmingly negative for black. In general, MCTS struggles with games with a large number of possible (yet useless) moves.
+The position above looks good for black from the MCTS perspective. If both white and black are playing randomly, then white only has a $$\frac{1}{361}$$ chance to pick a game-ending move, while black has a $$\frac{7}{361}$$ chance to retaliate with a 5-in-a-row choice. But despite this evaluation, any competent player with white would obviously pick the game-ending strategy, so this position should evaluate as overwhelmingly negative for black. In general, MCTS struggles with games with a large number of possible moves.
 
 
 
