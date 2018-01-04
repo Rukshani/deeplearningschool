@@ -164,10 +164,12 @@ def ai_best_move(game):
 
 Monte Carlo search with a sufficient number of random playouts (usually > 100) can have surprisingly good results on many simple games, including the standard Tic-Tac-Toe. But it is also extremely easy to fool a Monte-Carlo based AI. 
 
-To see this, we're going to have to scale up to a significantly more complicated game: [Gomoku](https://en.wikipedia.org/wiki/Gomoku). In Gomoku, you win by getting a 5 by 5 row of pieces on a 19 by 19 board. As the Gomoku example below shows, while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
+To see this, we're going to have to scale up to a significantly more complicated game: [Gomoku](https://en.wikipedia.org/wiki/Gomoku). In Gomoku, you win by getting a 5 by 5 row of pieces on a 19 by 19 board. And as the Gomoku example below shows, while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
 
 ![gomoku-fail.png]({{site.baseurl}}/media/gomoku-fail.png)
 
+{:.image-caption}
+The position above looks good for black from the MCTS perspective. If both white and black are playing randomly, then white only has 
 
 
 
