@@ -175,7 +175,9 @@ The position above looks good for black from the MCTS perspective. If both white
 
 ### Upper-Confidence Bounds Applied to Trees (UCT)
 
-One way to fix this problem is to make the opponent move selections more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**.
+One way to fix this problem is to make the move selections within the playouts be more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**. This is superficially similar to what we did inside DFS, where we experimented with every possible move and chose the move with the highest `value()`. But since computing the true value would be _extremely_ expensive, we instead want to compute a heuristic approximation (`heuristic_value()`) of the true value.
+
+
 
 Looking at this problem from the perspective of the opponent, each move is a complete black box; almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance exploring and testing the slot machines (and of course recording statistics) with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way.
 
