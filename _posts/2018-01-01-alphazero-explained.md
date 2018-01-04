@@ -358,7 +358,7 @@ It turns out this is really all there is to the core AlphaZero algorithm, except
 - AlphaZero uses a lot of tricks from the computer vision toolbox, including aggressive data augmentation.
 - Along with predicting the value of a given state, AlphaZero also tries to predict a probability distribution on the best moves from a given state (to combat overfitting), using a network with a "policy head" and a "value head". These two measures cross-validate one another to ensure the network is rarely confident about wrong predictions.
 
-![]({{site.baseurl}}/media/alphago_arch.png)![alphago_arch.png]
+![alphago_arch.png]({{site.baseurl}}/media/alphago_arch.png)
 
 {:.image-caption}
 The architecture of AlphaZero as applied to Go. Note that the network layout, especially the input layers, must be game specific, so chess, for example, would use a different DCNN architecture.
