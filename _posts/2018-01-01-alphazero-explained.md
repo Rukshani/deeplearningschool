@@ -348,8 +348,7 @@ def heuristic_value(game):
 
 After only two days training with this algorithm, we can achieve near-optimal play (i.e multiple threat sequences followed by a double-threat victory) on 9 by 9 Gomoku with just my single-threaded 2015 Macbook. Using deep learning really does cut down the search time and improve the generality of standard MCTS significantly :)
 
-{:.image-caption}
- 
+<br> 
 
 
 ### AlphaZero and Bootstrapping
