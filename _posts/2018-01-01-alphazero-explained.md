@@ -27,7 +27,7 @@ Improving these programs required ekeing out more efficiency from the underlying
 
 And to add insult to injury, AlphaZero is a _radically_ simple algorithm. It's so simple that even a lowly blogger like me should be able to explain it and teach YOU how to code it. At least, that's the idea.
 
-
+<br>
 
 
 ### General Game-Playing and DFS
@@ -47,7 +47,7 @@ whereas these games are not:
 - [The Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma)
 - Video games like Starcraft
 
-When games have random elements and hidden states, it is much more difficult to design AI systems to play them, although there have been powerful poker and Starcraft AI developed. Thus, the AlphaZero algorithm is restricted to solving classical games only.
+When games have random elements and hidden states, it is much more difficult to design AI systems to play them, although there have been powerful [poker](https://arxiv.org/abs/1701.01724) and [Starcraft](https://arxiv.org/abs/1707.03743) AI developed. Thus, the AlphaZero algorithm is restricted to solving classical games only.
 
 In a classical game, because both players have perfect information, every position is either **winnable** or **unwinnable**.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible values for a given state: either it is a guaranteed loss **(-1)**, a guaranteed win **(+1)**, or a guaranteed draw **(0)**.
 
@@ -87,7 +87,7 @@ def value(game):
     return max(state_values)
 ~~~
 
-Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the highest resultant score. We call this the DFS approach because, to choose a move, we are essentially doing depth-first search on the tree of possible game states. 
+Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the lowest resultant score for the opponent. We call this the DFS approach because, to choose a move, we have to do depth-first search on the tree of possible game states. 
 
 ~~~ python
 r"""
