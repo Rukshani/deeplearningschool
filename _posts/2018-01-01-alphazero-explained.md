@@ -19,7 +19,11 @@ The highly publicized match between Lee Sedol, 9th dan Go grandmaster, and Alpha
 
 But I'm not here to talk about AlphaGo. I'm here to discuss AlphaZero, the algorithm some DeepMind researchers released a year later. The algorithm that uses NO previous information or human-played games whatsoever, starting with nothing but the rules of the game. The algorithm that was able to handily beat the original version of AlphaGo in only four hours (?) of training time. The algorithm that can be applied without modification to chess, Shogi, and almost any other "classical" game with perfect information and no random elements.
 
-If computer programs could feel humilitation, AlphaZero would be making every commercial AI chess or Go program _overload_ with shame. Every single one of them (including the original AlphaGo) uses ridiculously large precomputed tablebases of moves, professional datasets of "well-played games", and carefully crafted heuristic functions. Improving these programs required ekeing out more efficiency from the underlying hardware and making tiny but arcane changes to various interlocking factors and scores. AlphaZero saw the cutthroat, hypercompetitive ecosystem of competitive game-playing, forged through hundreds of thousands of hours of programmer effort, and decided that it was a problem worth spending just _four hours_ on. That's gotta hurt.
+If computer programs could feel humilitation, AlphaZero would be making every commercial AI chess or Go program _overload_ with shame. Every single one of them (including the original AlphaGo) uses ridiculously large precomputed tablebases of moves, professional datasets of "well-played games", and carefully crafted heuristic functions with tons of hacky edge-cases.
+
+> "A few years ago I commented to a chess engine developer that the methods of compensating for which side makes the last move in board evaluation seem a bit like slaughtering a chicken under a full moon, and he responded ‘Chess engines slaughter millions of chickens per second‘." -- [Bram Cohen](https://medium.com/@bramcohen/alphazeros-real-secret-sauce-is-mcts-b6f238d95374)
+
+Improving these programs required ekeing out more efficiency from the underlying hardware and making tiny but arcane changes to various interlocking factors and scores. AlphaZero saw the cutthroat, hypercompetitive ecosystem of competitive game-playing, forged through hundreds of thousands of hours of programmer effort, and decided that it was a problem worth spending just _four hours_ on. That's gotta hurt.
 
 And to add insult to injury, AlphaZero is a _radically_ simple algorithm. It's so simple that even a lowly blogger like me should be able to explain it and teach YOU how to code it. At least, that's the idea.
 
@@ -373,9 +377,9 @@ But, even if it's difficult to implement on anything but the fastest hardware, A
 ![bootstrapping.png]({{site.baseurl}}/media/bootstrapping.png)
 
 {:.image-caption}
-The deep neural network is always playing "catch-up" with the MCTS value predictions. MCTS is in turn improved when it has a better neural network to improve the heuristic value estimations, creating a virtuous cycle of self-improvement.
+The deep neural network is always playing "catch-up" with the MCTS value predictions. MCTS is in turn improved when it has a better neural network to improve the heuristic value estimations, creating a virtuous cycle of self-improvement. This shares some fundamental similarities with recent research in generative adversarial neural networks (GANs).
 
-
+Ultimately, the development of AlphaZero is bound to cause a lot of reverbrations in the AI community. Earlier in this post I discussed how shocking AlphaZero's development was, and its a point I'd like to reiterate. Nobody expected that it would be _possible_ to beat the very best chess and Go engines without any domain knowledge using such an elegant, simple general-purpose algorithm. And nobody could have expected it would have happened this _soon_. Now it seems like all classical games simple enough for humans to play are also simple enough for computers to solve. And that'll be the end 
 
 
 
