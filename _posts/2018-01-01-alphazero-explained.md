@@ -187,7 +187,12 @@ where:
 
 The first term in the value privileges exploitation; playing known moves with high values and  tend to result in victory. The second term incentivizes exploration; trying out moves that have a low visit count and updating the statistics so that we have a better knowledge of how valuable/useful these moves are.
 
-Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. In essence, the model begins to play against itself; it uses the statistics collected during simulation about good and bad states, to inform how it computes the winnability of a state. There's a bootstrapping effect going on here; you'll likely notice when running a UCT implementation that 
+![explore.png]({{site.baseurl}}/media/explore.png)
+
+{:.image-caption}
+An example search tree using UCT. Note that "promising" moves and branches of the state space are explored more, while unpromising branches that lead to losses are simulated far less.
+
+Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. In essence, the model begins to **play against itself**; it uses the statistics collected during simulation about good and bad states, to inform how it computes the winnability of a state. This helps it improve further in a self-reinforcing cycle.
 
 ~~~ python
 
@@ -276,6 +281,8 @@ Thinking about the problem from a deeper theoretical basis, we see that
 
 
 A key component of the success of UCT is how it allows for the construction of **lopsided exploration trees**. In complex games like chess and Go, there are an incomprehensible number of states, but most of them are unimportant because they can only be reached if one or both players play extremely badly. Using UCT, you can avoid exploring out these "useless" states and focus most of your computational energy on simulating games in the interesting portion of the state space. For a visualization of this see below.
+
+
 
 
 ### AlphaZero: Deep Learning Game Heuristics
