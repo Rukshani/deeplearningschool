@@ -144,10 +144,17 @@ def playout(game):
 	
     return value
 
+r"""
+Finds the expected value of a game by running the specified number
+of random simulations.
+"""
 def monte_carlo_value(game, N=100):
     scores = [playout(game) for i in range(0, N)]
     return np.mean(scores)
 
+r"""
+Chooses best valued move to play using Monte Carlo Tree search.
+"""
 def ai_best_move(game):
 	
     action_dict = {}
@@ -237,16 +244,6 @@ def playout(game):
 def monte_carlo_value(game, N=100):
     scores = [playout(game) for i in range(0, N)]
     return np.mean(scores)
-
-def ai_best_move(game):
-
-    action_dict = {}
-    for move in game.valid_moves():
-        game.make_move(move)
-        action_dict[move] = -monte_carlo_value(game)
-        game.undo_move()
-
-    return max(action_dict, key=action_dict.get)
 
 ~~~
 
