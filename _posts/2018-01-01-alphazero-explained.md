@@ -137,7 +137,6 @@ def playout(game):
     if game.over():
         return -game.score()
     
-    state_values = []
     move = random.choice(game.valid_moves())
     game.make_move(move)
     value = -value(game))
@@ -196,92 +195,67 @@ Whereas the previous two algorithms we worked with, DFS and MCTS, were static, U
 
 ~~~ python
 
-class MCTSController(object):
+import random
+import numpy as np
+from utils import hashable
+from games.games import AbstractGame
 
-	def __init__(self, manager, T=0.3, C=1.5):
-		super().__init__()
+# store statistics
+visits = {}
+differential = {}
 
-		self.visits = manager.dict()
-		self.differential = manager.dict()
-		self.T = T
-		self.C = C
+def heuristic_value(game):
+    N = visits.get("total", 1)
+    Ni = visits.get(hashable(game.state()), 1e-5)
+    V = score.get(hashable(game.state()), 0)*1.0/Ni
+    return V + C*(np.log(N)/Ni)
 
-	def record(self, game, score):
-		self.visits["total"] = self.visits.get("total", 1) + 1
-		self.visits[hashable(game.state())] = self.visits.get(hashable(game.state()), 0) + 1
-		self.differential[hashable(game.state())] = self.differential.get(hashable(game.state()), 0) + score
+# update log for game
+def record(game, score):
+    visits["total"] = visits.get("total", 1) + 1
+    visits[hashable(game.state()] = visits.get(hashable(game.state(), 0) + 1
+    differential[hashable(game.state()] = differential.get(hashable(game.state(), 0) + score
 
-	r"""
-	Evaluates the "value" of a state as a bandit problem, using the value + exploration heuristic.
-	"""
-	def heuristic_value(self, game):
-		N = self.visits.get("total", 1)
-		Ni = self.visits.get(hashable(game.state()), 1e-9)
-		V = self.differential.get(hashable(game.state()), 0)*1.0/Ni 
-		return V + self.C*(np.log(N)/Ni)
+def playout(game):
+    if game.over():
+        record(game, -game.score())
+        return -game.score()
 
-	r"""
-	Runs a single, random heuristic guided playout starting from a given state. This updates the 'visits' and 'differential'
-	counts for that state, as well as likely updating many children states.
-	"""
-	def playout(self, game, expand=150):
+    action_heuristic_dict = {}
+    for move in game.valid_moves():
+        game.make_move(move)
+        action_heuristic_dict[move] = -heuristic_value(game)
+        game.undo_move()
+    move = max(action_heuristic_dict, key=action_heuristic_dict.get)
+    game.make_move(move)
+    value = -value(game)
+    game.undo_move()
+    record(game, value)
+    
+    return value
 
-		if expand == 0 or game.over():
-			score = game.score()
-			self.record(game, score)
-			#print ('X' if game.turn==1 else 'O', score)
-			return score
+def monte_carlo_value(game, N=100):
+    scores = [playout(game) for i in range(0, N)]
+    return np.mean(scores)
 
-		action_mapping = {}
+def ai_best_move(game):
 
-		for action in game.valid_moves():
-			
-			game.make_move(action)
-			action_mapping[action] = self.heuristic_value(game)
-			game.undo_move()
-		
-        # Instead of choosing a move randomly, we choose it using the exploration heuristic
-		chosen_action = sample(action_mapping, T=self.T)
-		game.make_move(chosen_action)
-		score = -self.playout(game, expand=expand-1) #play branch
-		game.undo_move()
-		self.record(game, score)
+    action_dict = {}
+    for move in game.valid_moves():
+        game.make_move(move)
+        action_dict[move] = -monte_carlo_value(game)
+        game.undo_move()
 
-		return score
-
-	r"""
-	Evaluates the "value" of a state by randomly playing out games starting from that state and noting the win/loss ratio.
-	"""
-	def value(self, game, playouts=100, steps=5):
-
-		# play random playouts starting from that game value
-		with Pool() as p:
-			scores = p.map(self.playout, [game.copy() for i in range(0, playouts)])
-
-		return self.differential[hashable(game.state())]*1.0/self.visits[hashable(game.state())]
-
-	r"""
-	Chooses the move that results in the highest value state.
-	"""
-	def best_move(self, game, playouts=100):
-
-		action_mapping = {}
-
-		for action in game.valid_moves():
-			game.make_move(action)
-			action_mapping[action] = self.value(game, playouts=playouts)
-			game.undo_move()
-
-		print ({a: "{0:.2f}".format(action_mapping[a]) for a in action_mapping})
-		return max(action_mapping, key=action_mapping.get)
+    return max(action_dict, key=action_dict.get)
 
 ~~~
 
-Thinking about the problem from a deeper theoretical basis, we see that 
 
+A key component of the success of UCT is how it allows for the construction of **lopsided exploration trees**. In complex games like chess and Go, there are an incomprehensibly large number of states, but most of them are unimportant because they can only be reached if one or both players play extremely badly. Using UCT, you can avoid exploring out these "useless" states and focus most of your computational energy on simulating games in the interesting portion of the state space, as the diagram below shows.
 
-A key component of the success of UCT is how it allows for the construction of **lopsided exploration trees**. In complex games like chess and Go, there are an incomprehensible number of states, but most of them are unimportant because they can only be reached if one or both players play extremely badly. Using UCT, you can avoid exploring out these "useless" states and focus most of your computational energy on simulating games in the interesting portion of the state space. For a visualization of this see below.
-
+![lopsided.png]({{site.baseurl}}/media/lopsided.png)
+{:.image-caption}
+The state
 
 
 
