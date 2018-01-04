@@ -124,9 +124,9 @@ So does this mean that we've solved all two-player classical games? Not quite.  
 {:.image-caption}
 Branching paths in the game of Go. There are about 150-250 moves on average playable from a given game state.
 
-The reason for the slow progress of DFS is that when estimating the value of a given state in the search, both players must play **optimally**, choosing the move that gives them the best value (making complex recursion necessary). Maybe, instead of making the players choose optimal moves (which is extremely computationally expensive), we can compute the value of a state by making the players choose _random_ moves from there on, and seeing who wins. Or perhaps we could even use cheap computational heuristics to make the players more likely to choose good moves.
+The reason for the slow progress of DFS is that when estimating the value of a given state in the search, both players must play **optimally**, choosing the move that gives them the best value, requiring complex recursion. Maybe, instead of making the players choose optimal moves (which is extremely computationally expensive), we can compute the value of a state by making the players choose _random_ moves from there on, and seeing who wins. Or perhaps we could even use cheap computational heuristics to make the players more likely to choose good moves.
 
-This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts.
+This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts. Observe how similar this code is to the previous DFS code, except with randomly choosing moves instead of iterating through all move possibilities and picking the best one.
 
 ~~~ python
 import random
@@ -162,7 +162,13 @@ def ai_best_move(game):
 
 
 
-Clearly, Monte Carlo search doesn't choose the optimal move, but for many simple games, a large number of random playouts will suffice . key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
+Monte Carlo search with a sufficient number of random playouts (usually > 100) can have surprisingly good results on many simple games, including the standard Tic-Tac-Toe. But it is also extremely easy to fool a Monte-Carlo based AI. 
+
+To see this, we're going to have to scale up to a significantly more complicated game: [Gomoku](https://en.wikipedia.org/wiki/Gomoku). In Gomoku, you win by getting a 5 by 5 row of pieces on a 19 by 19 board. As the Gomoku example below shows, while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
+
+![gomoku-fail.png]({{site.baseurl}}/media/gomoku-fail.png)
+
+
 
 
 ### Upper-Confidence Bounds Applied to Trees (UCT)
