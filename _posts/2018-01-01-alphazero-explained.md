@@ -354,16 +354,27 @@ After only two days training with this algorithm, we can achieve near-optimal pl
 ### AlphaZero and Bootstrapping
 
 It turns out this is really all there is to the core AlphaZero algorithm, except for a few conceptual and implementation details:
-- The neural network architecture used extremely deep (inspired by the ResNet, which has seen great success on ImageNet and other related computer vision tasks). 
+- The neural network architecture used was extremely deep (inspired by the ResNet, which has seen great success on ImageNet and other related computer vision tasks). 
 - AlphaZero uses a lot of tricks from the computer vision toolbox, including aggressive data augmentation.
 - Along with predicting the value of a given state, AlphaZero also tries to predict a probability distribution on the best moves from a given state (to combat overfitting), using a network with a "policy head" and a "value head". These two measures cross-validate one another to ensure the network is rarely confident about wrong predictions.
+- AlphaZero uses a crazy amount of playouts (800 simulations per move) and self-play games (> 100000 games) to learn its value function.
 
 ![alphago_arch.png]({{site.baseurl}}/media/alphago_arch.png)
 
 {:.image-caption}
-The architecture of AlphaZero as applied to Go. Note that the network layout, especially the input layers, must be game specific, so chess (for example) would require a different DCNN architecture.
+The architecture of AlphaZero as applied to Go. Note that the network layout, especially the input layers, must be game specific, so other games like chess or shogi would require a different DCNN architecture.
 
-So why has AlphaZero been so ridiculously successful in so many different domains, given that 
+So why has AlphaZero been so ridiculously successful in so many different domains, given that it is just a straightforward combination of MCTS and UCT with recent deep neural network research? 
+
+Some researchers argue that the main strength of AlphaZero was its compute time. The research paper claims that AlphaZero only trained for four hours, but its important to note that this is four hours of training on Google's most advanced hardware: its prized **Tensor Processing Units** (or TPUs). Google claims that its TPUs are at least 100x as fast as the highest-end GPUs, and based on extrapolation likely thousands of times faster than the hardware available 2 or 5 years ago. Thus, in a very real sense, it might have been impossible to create AlphaZero before 2017 -- the technology just wasn't there. In fact, if you aren't Google, it might be impossible to create AlphaZero now, given the many failed/incomplete replication attempts (leela-zero, Roc-Alpha-Go). From that point of view, AlphaZero's success is more the success of Google's hardware development team.
+
+But, even if it's difficult to implement on anything but the fastest hardware, AlphaZero's design is still brilliant conceptually (certainly much more elegant than the brute-force algorithms that used to dominate top-level chess and Go play), and could provide inspiration for new types of self-learning algorithms. As the deep neural network improves, it makes the MCTS search more efficient, which results in better state valuations to train the deep neural network with -- causing a self-reinforcing cycle that can quickly snowball.
+
+![bootstrapping.png]({{site.baseurl}}/media/bootstrapping.png)
+
+
+
+
 
 
 
