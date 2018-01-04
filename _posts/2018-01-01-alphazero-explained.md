@@ -285,9 +285,11 @@ The key here is learning to use deep convolutional neural networks (DCNNs) as **
 ![dcnn.jpg]({{site.baseurl}}/media/dcnn.jpg)
 
 {:.image-caption}
-A simple example DCNN architecture.
+A simple example DCNN architecture. Deep convolutional networks heavily leverage local similarities and structure in images, and may owe their success to being structured similarly to the human optical cortex.
 
-Instead of memorizing a heuristic value for every game state we encounter and putting it in a hashtable, we can train a deep neural network to _learn_ heuristic values from "images" of a game board. The network will remember previous states fairly accurately (assuming we train the DCNN well) but it will also be able to generalize to new, never-before-seen game-states. Sure, because DCNNs are a learning algorithm 
+Instead of memorizing a heuristic value for every game state we encounter and putting it in a hashtable, we can train a deep neural network to _learn_ heuristic values from "images" of a game board. The network will remember previous states fairly accurately (assuming we train the DCNN well) but it will also be able to generalize to new, never-before-seen game-states. Sure, because DCNNs are a learning algorithm, the predicted values of states will never be perfect, but that's OK -- we're just using them as fuzzy heuristics in the search algorithm anyway. All our previous methods were based on exhaustive playouts; adding in a deep neural network gives our models more of the learned "intuition" that human players often leverage.
+
+
 
 
 
