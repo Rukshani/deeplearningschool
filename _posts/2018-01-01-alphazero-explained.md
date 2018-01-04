@@ -187,9 +187,7 @@ where:
 
 The first term in the value privileges exploitation; playing known moves with high values and  tend to result in victory. The second term incentivizes exploration; trying out moves that have a low visit count and updating the statistics so that we have a better knowledge of how valuable/useful these moves are.
 
-Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. 
-
-Thus, when we write code to represent UCT, we need to make a record of the states we visit and their values. We can let the algorithm play games against itself and watch it slowly improve.
+Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. In essence, the model begins to play against itself; it uses the statistics collected during simulation about good and bad states, to inform how it computes the winnability of a state. There's a bootstrapping effect going on here; you'll likely notice when running a UCT implementation that 
 
 ~~~ python
 
