@@ -372,6 +372,10 @@ But, even if it's difficult to implement on anything but the fastest hardware, A
 
 ![bootstrapping.png]({{site.baseurl}}/media/bootstrapping.png)
 
+{:.image-caption}
+The deep neural network is always playing "catch-up" with the MCTS value predictions. MCTS is in turn improved when it has a better neural network to improve the heuristic value estimations, creating a virtuous cycle of self-improvement.
+
+
 
 
 
