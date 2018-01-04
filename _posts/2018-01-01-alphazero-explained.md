@@ -45,7 +45,13 @@ whereas these games are not:
 
 When games have random elements and hidden states, it is much more difficult to design AI systems to play them, although there have been powerful poker and Starcraft AI developed. Thus, the AlphaZero algorithm is restricted to solving classical games only.
 
-In a classical game, because both players have perfect information, every position is either winnable or unwinnable.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible values for a given state: either it is a guaranteed loss **(-1)**, a guaranteed win **(+1)**, or a guaranteed draw **(0)**.
+In a classical game, because both players have perfect information, every position is either **winnable** or **unwinnable**.  Either the player who is just about to make a move can win (given that they choose the right move) or they can't (because no matter what move they make, the game is winnable for the other player). When you add in the possibility of drawing (neither player wins) then there are three possible values for a given state: either it is a guaranteed loss **(-1)**, a guaranteed win **(+1)**, or a guaranteed draw **(0)**.
+
+![unwinnable.png]({{site.baseurl}}/media/unwinnable.png)
+
+{:.image-caption}
+Some games are more obviously unwinnable than others.
+
 
 If this definition makes you shout "Recursion!", then your instincts are on the right track. In fact, it is easy to determine the value of a game state using a self-referential definition of winnability. We can write some Python code, using my [predefined](https://github.com/nikcheerla/alphazero/tree/master/games) `AbstractGame` class. Note that we handle the game using general methods, such as `make_move()`, `undo_move()`, and `over()`, that could apply to any game.
 
