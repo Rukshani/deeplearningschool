@@ -351,7 +351,7 @@ After only two days training with this algorithm, we can achieve near-optimal pl
 <br> 
 
 
-### AlphaZero and Bootstrapping
+### AlphaZero and The Big Picture
 
 It turns out this is really all there is to the core AlphaZero algorithm, except for a few conceptual and implementation details:
 - The neural network architecture used was extremely deep (inspired by the ResNet, which has seen great success on ImageNet and other related computer vision tasks). 
