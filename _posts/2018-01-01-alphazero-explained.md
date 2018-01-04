@@ -86,7 +86,6 @@ def value(game):
 Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the highest resultant score. We call this the DFS approach because, to choose a move, we are essentially doing depth-first search on the tree of possible game states. 
 
 ~~~ python
-
 r"""
 Chooses optimal move to play; ideally plays
 moves that result in -1 valued states for the opponent 
@@ -206,7 +205,6 @@ Whereas the previous two algorithms we worked with, DFS and MCTS, were static, U
 This code shows a simple version of UCT in action. Note that in order to compute moves in a reasonable amount of time, you'd ideally want to parallelize the code to run playouts asynchronously. You can see my efficient, multithreaded implementation of UCT [here](https://github.com/nikcheerla/alphazero/blob/master/mcts.py).
 
 ~~~ python
-
 import random
 import numpy as np
 from utils import hashable
@@ -292,7 +290,6 @@ Instead of memorizing a heuristic value for every game state we encounter and pu
 Here's some code that creates a simple DCNN in [PyTorch](http://pytorch.org/) (using my [torchtrain](https://github.com/nikcheerla/torchtrain) library to enable Pythonic data loading), designed to predict the value of a given 19 by 19 state in Gomoku.
 
 ~~~ python
-
 from torchtrain.modules import TrainableModel
 
 class Net(TrainableModel):
@@ -336,7 +333,6 @@ class Net(TrainableModel):
 Now, we can modify the `record()` and `heuristic_value()` functions to make them train and predict with the neural net, respectively:
 
 ~~~ python
-
 # store statistics in DCNN
 model = Net()
 
@@ -350,7 +346,7 @@ def heuristic_value(game):
     return model.predict(dataset).mean()
 ~~~
 
-After only two days training with this algorithm, we can achieve near-optimal play (i.e multiple threat sequences followed by a double-threat victory) on 9 by 9 Gomoku with just my single-threaded 2015 Macbook. Using deep learning really does significantly cut down the search time and improve the generality of standard MCTS exponentially.
+After only two days training with this algorithm, we can achieve near-optimal play (i.e multiple threat sequences followed by a double-threat victory) on 9 by 9 Gomoku with just my single-threaded 2015 Macbook. Using deep learning really does cut down the search time and improve the generality of standard MCTS significantly :)
 
 
 
