@@ -263,11 +263,16 @@ UCT explores the state space of possible moves in a fundamentally asymmetric way
 
 ### AlphaZero: Deep Learning Heuristics
 
-Given enough playouts, UCT will be able to explore all of the important game positions in any game (spending far less time on states that tend not to occur in intelligent play) and determine their values using the Monte Carlo Method. But the amount of playouts needed in chess and Go for this to happen is computationally infeasible, even with the UCT prioritization; thus, most viable MCTS engines for these games end up exploiting a lot of domain-specific knowledge and heuristics.
+Given enough playouts, UCT will be able to explore all of the important game positions in any game  and determine their values using the Monte Carlo Method. But the amount of playouts needed in chess and Go for this to happen is still computationally infeasible, even with UCT prioritization. Thus, most viable MCTS engines for these games end up exploiting a lot of domain-specific knowledge and heuristics.
 
-To see why, look at the diagram below. The first and second chess game are completely different in terms of the positions of pieces, but the essential components of the "situation" are the same; a black bishop supported by a black knight is checking a white king. The differences in symmetry and pawn ordering are mostly irrelevant. Yet, to the UCT algorithm, the two chess games are completely different states, and even if UCT has thoroughly "explored" game #1 and knows by the heuristic it is a +0.2 advantage for black, it has to start from scratch when exploring game #2.
+To see why, look at the diagram below. The first and second Gomoku games are completely different in terms of the positions of pieces, but the essential components of the "situation" are the same. The differences in piece locations and structure are _mostly_ irrelevant strategically. Yet, to the UCT algorithm, the two games represent different states, and even if UCT has thoroughly "explored" game #1 and knows by the heuristic it is a +0.2 advantage for black, it has to start from scratch when exploring game #2.
 
-Humans have no problem noting the similarities between different game positions and their "winnability"; in fact, that's how most of our intuition in playing games comes about! But how can we train an AI to do the same? 
+![chesscombo.png]({{site.baseurl}}/media/chesscombo.png)
+
+{:.image-caption}
+These Gomoku opening games are fundamentally ver similar, even though they are shifted and have minor variations in relative piece placement.
+
+Humans have no problem noting the similarities between different game positions and intuitively noting that  in fact, that's how most of our intuition in playing games comes about! But how can we train an AI to do the same? 
 
 We can encode 
 
