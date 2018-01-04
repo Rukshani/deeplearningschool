@@ -349,11 +349,16 @@ def heuristic_value(game):
 After only two days training with this algorithm, we can achieve near-optimal play (i.e multiple threat sequences followed by a double-threat victory) on 9 by 9 Gomoku with just my single-threaded 2015 Macbook. Using deep learning really does cut down the search time and improve the generality of standard MCTS significantly :)
 
 {:.image-caption}
-
+ 
 
 
 ### AlphaZero and Bootstrapping
 
+It turns out this is really all there is to the core AlphaZero algorithm, except for a few conceptual and implementation details:
+- The neural network architecture used extremely deep (inspired by the ResNet, which has seen great success on ImageNet and other related computer vision tasks). 
+- Along with predicting the value of a given state, AlphaZero also tries to predict a probability distribution on the best moves (to combat overfitting), using a network with a "policy head" and a "value head".
+
+![]({{site.baseurl}}/media/alphago_arch.png)![alphago_arch.png]({{site.baseurl}}/media/alphago_arch.png)
 
 
 
