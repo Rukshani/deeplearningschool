@@ -177,15 +177,15 @@ The position above looks good for black from the MCTS perspective. If both white
 
 One way to fix this problem is to make the move selections within the playouts be more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**. This is superficially similar to what we did inside DFS, where we experimented with every possible move and chose the move with the highest resultant `value()`. But since computing the true value would be _extremely_ expensive, we instead want to compute a cheap heuristic approximation (`heuristic_value()`) of the true value of each move, and choose moves based on this heuristic.
 
-From the perspective of the algorithm, each move is a complete black box -- its value unknown --almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance exploring and testing the slot machines (and of course recording statistics) with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way.
+From the perspective of the algorithm, each move is a complete black box -- its value unknown --almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance exploring and testing the slot machines (and of course recording statistics) with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way. See this great [blog post](https://jeffbradberry.com/posts/2015/09/intro-to-monte-carlo-tree-search/) by Jeff Bradbury for more info.
 
-Thus, we define the heuristic value of a state $$V(S) = x_i + \sqrt{\frac{2\ln{N}}{n_i}}$$,
+Thus, we define the heuristic value of a move $$V_i = \frac{s_i}{n_i} + \sqrt{\frac{2\ln{N}}{n_i}}$$,
 where:
-- $x_i$: the mean payout for machine i
-- $n_i$: the number of plays of machine i
-- $N$: the total number of plays
+- $s_i$: the aggregate score after playing move $i$ in all simulations thus far
+- $n_i$: the number of plays of move i in all simulations thus far
+- $N$: the total number of game states simulated
 
-> Then, your strategy is to pick the machine with the highest upper bound each time. As you do so, the observed mean value for that machine will shift and its confidence interval will become narrower, but all of the other machines' intervals will widen. Eventually, one of the other machines will have an upper bound that exceeds that of your current one, and you will switch to that one. This strategy has the property that your regret, the difference between what you would have won by playing solely on the actual best slot machine and your expected winnings under the strategy that you do use, grows only as $O(\ln⁡{n})$.
+
 
 Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. 
 
