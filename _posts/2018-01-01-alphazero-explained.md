@@ -185,11 +185,14 @@ One way to fix this problem is to make the move selections within the playouts b
 
 From the perspective of the algorithm, each move is a complete black box -- its value unknown --almost like a slot machine with unknown payout probabilities. Some moves might have only a $30\%$ win rate, other moves could have a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance testing the slot machines and recording statistics with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way. See this great [blog post](https://jeffbradberry.com/posts/2015/09/intro-to-monte-carlo-tree-search/) by Jeff Bradbury for more info.
 
-Thus, we define the heuristic value of a move $$V_i = \frac{s_i}{n_i} + \sqrt{\frac{2\ln{N}}{n_i}}$$,
+Thus, we define the heuristic value of a move $V_i$ to be:
+$$V_i = \frac{s_i}{n_i} + C\sqrt{\frac{\ln{N}}{n_i}}$$,
+
 where:
 - $s_i$: the aggregate score after playing move $i$ in all simulations thus far
 - $n_i$: the number of plays of move i in all simulations thus far
 - $N$: the total number of game states simulated
+- $C$: an adjustable constant representating the amount of exploration to allow
 
 The first term in the heuristic encourages exploitation; playing known moves with high values and  tend to result in victory. The second term encourages exploration; trying out moves that have a low visit count and updating the statistics so that we have a better knowledge of how valuable/useful these moves are.
 
@@ -267,7 +270,8 @@ Given enough playouts, UCT will be able to explore all of the important game pos
 
 To see why, look at the diagram below. The first and second Gomoku games are completely different in terms of the positions of pieces, but the essential components of the "situation" are the same. The differences in piece locations and structure are _mostly_ irrelevant strategically. Yet, to the UCT algorithm, the two games represent different states, and even if UCT has thoroughly "explored" game #1 and knows by the heuristic it is a +0.2 advantage for black, it has to start from scratch when exploring game #2.
 
-![chesscombo.png]({{site.baseurl}}/media/chesscombo.png)
+![gomokucombo.png]({{site.baseurl}}/media/gomokucombo.png)
+
 
 {:.image-caption}
 These Gomoku opening games are fundamentally very similar, even though they are shifted and have minor variations in relative piece placement.
