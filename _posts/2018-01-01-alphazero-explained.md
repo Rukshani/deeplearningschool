@@ -175,22 +175,15 @@ The position above looks good for black from the MCTS perspective. If both white
 
 ### Upper-Confidence Bounds Applied to Trees (UCT)
 
-One way to fix this problem is to make the move selections within the playouts be more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**. This is superficially similar to what we did inside DFS, where we experimented with every possible move and chose the move with the highest `value()`. But since computing the true value would be _extremely_ expensive, we instead want to compute a heuristic approximation (`heuristic_value()`) of the true value.
+One way to fix this problem is to make the move selections within the playouts be more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**. This is superficially similar to what we did inside DFS, where we experimented with every possible move and chose the move with the highest resultant `value()`. But since computing the true value would be _extremely_ expensive, we instead want to compute a cheap heuristic approximation (`heuristic_value()`) of the true value of each move, and choose moves based on this heuristic.
 
+From the perspective of the algorithm, each move is a complete black box -- its value unknown --almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance exploring and testing the slot machines (and of course recording statistics) with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way.
 
-
-Looking at this problem from the perspective of the opponent, each move is a complete black box; almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance exploring and testing the slot machines (and of course recording statistics) with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way.
-
-Jeff Bradberry sums up this algorithm concisely in his great blog post on UCT:
-
-> Imagine ... that you are faced with a row of slot machines, each with different (unknown) payout probabilities and amounts. As a rational person (if you are going to play them at all), you would prefer to use a strategy that will allow you to maximize your net gain. But how can you do that? ... Clearly, your strategy is going to have to balance playing all of the machines to gather that information yourself, with concentrating your plays on the observed best machine. One strategy, called UCB1, does this by constructing statistical confidence intervals for each machine.
-
-> $$x_i \pm \sqrt{\frac{2\ln{N}}{n_i}}$$
-
->where:
-> - $x_i$: the mean payout for machine i
-> - $n_i$: the number of plays of machine ii
-> - $N$: the total number of plays
+Thus, we define the heuristic value of a state $$V(S) = x_i + \sqrt{\frac{2\ln{N}}{n_i}}$$,
+where:
+- $x_i$: the mean payout for machine i
+- $n_i$: the number of plays of machine i
+- $N$: the total number of plays
 
 > Then, your strategy is to pick the machine with the highest upper bound each time. As you do so, the observed mean value for that machine will shift and its confidence interval will become narrower, but all of the other machines' intervals will widen. Eventually, one of the other machines will have an upper bound that exceeds that of your current one, and you will switch to that one. This strategy has the property that your regret, the difference between what you would have won by playing solely on the actual best slot machine and your expected winnings under the strategy that you do use, grows only as $O(\ln⁡{n})$.
 
