@@ -203,6 +203,8 @@ An example search tree using UCT. Note that "promising" moves and branches of th
 
 Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. In essence, the model begins to **play against itself**; it uses the statistics collected during simulation about good and bad states, to inform how it computes the winnability of a state. This helps it improve further in a self-reinforcing cycle.
 
+This code shows a simple version of UCT in action. Note that in order to compute moves in a reasonable amount of time, you'd ideally want to parallelize the code to run playouts asynchronously. You can see my efficient, multithreaded implementation of UCT [here](https://github.com/nikcheerla/alphazero/blob/master/mcts.py).
+
 ~~~ python
 
 import random
@@ -266,9 +268,9 @@ UCT explores the state space of possible moves in a fundamentally asymmetric way
 
 ### AlphaZero: Deep Learning Heuristics
 
-Given enough playouts, UCT will be able to explore all of the important game positions in any game  and determine their values using the Monte Carlo Method. But the amount of playouts needed in chess and Go for this to happen is still computationally infeasible, even with UCT prioritization. Thus, most viable MCTS engines for these games end up exploiting a lot of domain-specific knowledge and heuristics.
+Given enough playouts, UCT will be able to explore all of the important game positions in any game  and determine their values using the Monte Carlo Method. But the amount of playouts needed in games like chess, Go, and Gomoku for this to happen is still computationally infeasible, even with UCT prioritization. Thus, most viable MCTS engines for these games end up exploiting a lot of domain-specific knowledge and heuristics.
 
-To see why, look at the diagram below. The first and second Gomoku games are completely different in terms of the positions of pieces, but the essential components of the "situation" are the same. The differences in piece locations and structure are _mostly_ irrelevant strategically. Yet, to the UCT algorithm, the two games represent different states, and even if UCT has thoroughly "explored" game #1 and knows by the heuristic it is a +0.2 advantage for black, it has to start from scratch when exploring game #2.
+To see why, look at the diagram below. The first and second Gomoku games are completely different in terms of the positions of pieces, but the essential components of the "situation" are the same. The differences in piece locations and structure are _mostly_ irrelevant strategically. Yet, to the UCT algorithm, the two games represent different states, and even if UCT has thoroughly "explored" game #1 and knows that it is a +0.2 advantage for black, it has to start from scratch when exploring game #2.
 
 ![gomokucombo.png]({{site.baseurl}}/media/gomokucombo.png)
 
@@ -277,6 +279,15 @@ To see why, look at the diagram below. The first and second Gomoku games are com
 These Gomoku opening games are fundamentally very similar, even though they are shifted and have minor variations in relative piece placement.
 
 Humans have no problem noting the similarities between different game positions and intuitively noting that similar strategies should apply. In fact, rather than memorizing different game states, we tend to do this by default. But how can we train an AI to do the same? 
+
+The key here is learning to use deep convolutional neural networks (DCNNs) as **fuzzy stores of value**. Previous research has shown that DCNNs show success at a wide variety of spatial and image tasks, including image classification, scene reconstruction, handwriting recognition, and much more. Crucially, DCNNs are able to learn abstract representations of images; after being shown a few thousand diverse photos of cats, for example, they can learn to classify cats of any angle, location, or color.
+
+![dcnn.jpg]({{site.baseurl}}/media/dcnn.jpg)
+
+{:.image-caption}
+A simple example DCNN architecture.
+
+Instead of memorizing a heuristic value for every game state we encounter and putting it in a hashtable, we can train a deep neural network to _learn_ heuristic values from "images" of a game board. The network will remember previous states fairly accurately (assuming we train the DCNN well) but it will also be able to generalize to new, never-before-seen game-states. Sure, because DCNNs are a learning algorithm 
 
 
 
