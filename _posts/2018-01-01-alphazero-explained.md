@@ -266,7 +266,7 @@ UCT explores the state space of possible moves in a fundamentally asymmetric way
 
 
 
-### AlphaZero: Deep Learning Heuristics
+### Deep Learning Heuristic Functions
 
 Given enough playouts, UCT will be able to explore all of the important game positions in any game  and determine their values using the Monte Carlo Method. But the amount of playouts needed in games like chess, Go, and Gomoku for this to happen is still computationally infeasible, even with UCT prioritization. Thus, most viable MCTS engines for these games end up exploiting a lot of domain-specific knowledge and heuristics.
 
@@ -296,42 +296,47 @@ Here's some code that creates a simple DCNN in [PyTorch](http://pytorch.org/) (u
 from torchtrain.modules import TrainableModel
 
 class Net(TrainableModel):
+    
+    def __init__(self):
 
-	def __init__(self):
+        super(TrainableModel, self).__init__()
+        self.conv1 = nn.Conv2d(2, 64, kernel_size=(3, 3), (1, 1))
+        self.conv2 = nn.Conv2d(64, 128, kernel_size=(3, 3), (1, 1))
+        self.conv3 = nn.Conv2d(128, 128, kernel_size=(3, 3), padding=(1, 1))
+        self.conv4 = nn.Conv2d(128, 128, kernel_size=(3, 3), padding=(1, 1))
+        self.layer1 = nn.Linear(128, 256)
+        self.layer2 = nn.Linear(256, 1)
 
-		super(TrainableModel, self).__init__()
-		self.conv1 = nn.Conv2d(2, 64, kernel_size=(3, 3), padding=(1, 1))
-		self.conv2 = nn.Conv2d(64, 128, kernel_size=(3, 3), padding=(1, 1))
-		self.conv3 = nn.Conv2d(128, 128, kernel_size=(3, 3), padding=(1, 1))
-		self.conv4 = nn.Conv2d(128, 128, kernel_size=(3, 3), padding=(1, 1))
-		self.layer1 = nn.Linear(128, 256)
-		self.layer2 = nn.Linear(256, 1)
+    def loss(self, data, data_pred):
+        Y_pred = data_pred["target"]
+        Y_target = data["target"]
+        return (F.mse_loss(Y_pred, Y_target))
 
-	def loss(self, data, data_pred):
-		Y_pred = data_pred["target"]
-		Y_target = data["target"]
-		return (F.mse_loss(Y_pred, Y_target))
-
-	def forward(self, data):
-		x = data['input']
+    def forward(self, data):
+        x = data['input']
         
         # Convolutions mixed with pooling layers
-		x = x.view(-1, 2, 19, 19)
-		x = F.relu(self.conv1(x))
-		x = F.relu(self.conv2(x))
-		x = F.max_pool2d(x, (2, 2))
-		x = F.relu(self.conv3(x))
-		x = F.max_pool2d(x, (2, 2))
-		x = F.relu(self.conv4(x))
+        x = x.view(-1, 2, 19, 19)
+        x = F.relu(self.conv1(x))
+        x = F.relu(self.conv2(x))
+        x = F.max_pool2d(x, (2, 2))
+        x = F.relu(self.conv3(x))
+        x = F.max_pool2d(x, (2, 2))
+        x = F.relu(self.conv4(x))
 
-		x = F.max_pool2d(x, (4, 4))[:, :, 0, 0]
-		x = F.dropout(x, p=0.2, training=self.training)
+        x = F.max_pool2d(x, (4, 4))[:, :, 0, 0]
+        x = F.dropout(x, p=0.2, training=self.training)
 		
-		x = self.layer1(x)
-		x = self.layer2(F.tanh(x))
+        x = self.layer1(x)
+        x = self.layer2(F.tanh(x))
 
-		return {'target': x}
+        return {'target': x}
 ~~~
+
+
+
+
+
 
 
 ### Does AlphaZero Deserve The Hype?
