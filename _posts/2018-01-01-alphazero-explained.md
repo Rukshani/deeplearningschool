@@ -257,7 +257,7 @@ A key component of the success of UCT is how it allows for the construction of *
 ![lopsided.png]({{site.baseurl}}/media/lopsided.png)
 
 {:.image-caption}
-UCT explores the state space of possible moves in a fundamentally asymmetric way, prioritizing those moves that seem to end in good outcome.
+UCT explores the state space of possible moves in a fundamentally asymmetric way.
 
 
 
