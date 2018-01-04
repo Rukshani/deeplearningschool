@@ -181,9 +181,9 @@ The position above looks good for black from the MCTS perspective. If both white
 
 ### Upper-Confidence Bounds Applied to Trees (UCT)
 
-One way to fix this problem is to make the move selections within the playouts be more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using a heuristic approximation of **what moves are worth exploring**. This is superficially similar to what we did inside DFS, where we experimented with every possible move and chose the move with the highest resultant `value()`. But since computing the true value would be _extremely_ expensive, we instead want to compute a cheap heuristic approximation (`heuristic_value()`) of the true value of each move, and choose moves based on this heuristic.
+One way to fix this problem is to make the move selections within the playouts be more intelligent. Rather than having the move choices within the playouts to be random, we want the opponent to choose their move using some knowledge of what moves are "worth playing". This is superficially similar to what we did inside our DFS method, where we experimented with every possible move and chose the move with the highest resultant `value()`. But since computing the true value of a move would be _extremely_ expensive, we instead want to compute a cheap **heuristic approximation** (`heuristic_value()`) of the true value of each move, and choose moves within playouts based on this heuristic.
 
-From the perspective of the algorithm, each move is a complete black box -- its value unknown --almost like a slot machine with unknown payout probabilities. Some moves might result in only a $30\%$ win rate, other moves might result in a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance testing the slot machines and recording statistics with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way. See this great [blog post](https://jeffbradberry.com/posts/2015/09/intro-to-monte-carlo-tree-search/) by Jeff Bradbury for more info.
+From the perspective of the algorithm, each move is a complete black box -- its value unknown --almost like a slot machine with unknown payout probabilities. Some moves might have only a $30\%$ win rate, other moves could have a $70\%$ win rate, but crucially, you don't know any of this in advance. You need to balance testing the slot machines and recording statistics with actually choosing the best moves. That's what the UCT algorithm is for: balancing exploration and exploitation in a reasonable way. See this great [blog post](https://jeffbradberry.com/posts/2015/09/intro-to-monte-carlo-tree-search/) by Jeff Bradbury for more info.
 
 Thus, we define the heuristic value of a move $$V_i = \frac{s_i}{n_i} + \sqrt{\frac{2\ln{N}}{n_i}}$$,
 where:
@@ -191,7 +191,7 @@ where:
 - $n_i$: the number of plays of move i in all simulations thus far
 - $N$: the total number of game states simulated
 
-The first term in the value privileges exploitation; playing known moves with high values and  tend to result in victory. The second term incentivizes exploration; trying out moves that have a low visit count and updating the statistics so that we have a better knowledge of how valuable/useful these moves are.
+The first term in the heuristic encourages exploitation; playing known moves with high values and  tend to result in victory. The second term encourages exploration; trying out moves that have a low visit count and updating the statistics so that we have a better knowledge of how valuable/useful these moves are.
 
 ![explore.png]({{site.baseurl}}/media/explore.png)
 
@@ -261,7 +261,7 @@ UCT explores the state space of possible moves in a fundamentally asymmetric way
 
 
 
-### AlphaZero: Deep Learning Game Heuristics
+### AlphaZero: Deep Learning Heuristics
 
 Given enough playouts, UCT will be able to explore all of the important game positions in any game (spending far less time on states that tend not to occur in intelligent play) and determine their values using the Monte Carlo Method. But the amount of playouts needed in chess and Go for this to happen is computationally infeasible, even with the UCT prioritization; thus, most viable MCTS engines for these games end up exploiting a lot of domain-specific knowledge and heuristics.
 
