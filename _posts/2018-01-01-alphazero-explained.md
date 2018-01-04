@@ -26,7 +26,7 @@ The algorithm that is a **radical simplification** of AlphaGo, so much simpler t
 
 
 
-### General Game-Playing
+### General Game-Playing and DFS
 
 In game theory, chess and Go are examples of turn-based, two-player games with _perfect information_; both players know everything relevant about the state of the game at any given time. Furthermore, there is no randomness or uncertainty in how making **moves** affects the game; making a given move will always result in the same final game state, one that both players know with complete certainty. We call games like these **classical games**.
 
@@ -96,14 +96,16 @@ A simulated game between two AIs using DFS. Since both AIs always pick an optima
 ### Monte-Carlo Tree Search
 
 
-So does this mean that we've solved all two-player classical games? Not quite.  Although the recursion above looks simple, it actually ends up checking all possible game states reachable from a given position in order to compute the value of a state. Thus, even though there do exist optimal strategies for complex games like chess and Go, their **game trees** are so intractably large that it would be impossible to find them.
+So does this mean that we've solved all two-player classical games? Not quite.  Although the recursion above looks simple, it has to check all possible game states reachable from a given position in order to compute the value of a state. Thus, even though there do exist optimal strategies for complex games like chess and Go, their **game trees** are so intractably large that it would be impossible to find them.
 
 ![branching.jpg]({{site.baseurl}}/media/branching.jpg)
 
 {:.image-caption}
 Branching paths in the game of Go. There are about 150-250 moves on average playable from a given game state.
 
-We need a faster way to approximate the value of a given game state. What if, instead of making the players choose optimal moves, we computed the value of a state by making the players choose _random_ moves from there on, and seeing who wins? This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts.
+The reason for the slow progress of DFS is that when estimating the value of a given state in the search, both players must play **optimally**, choosing the move that gives them the best value (making complex recursion necessary). Maybe, instead of making the players choose optimal moves (which is extremely computationally expensive), we can compute the value of a state by making the players choose _random_ moves from there on, and seeing who wins. Or perhaps we could even use cheap computational heuristics to make the players more likely to choose good moves.
+
+This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts.
 
 ~~~ python
 import random
@@ -139,7 +141,7 @@ def ai_best_move(game):
 
 
 
-Clearly, Monte Carlo search doesn't choose the optimal move. In fact, it often doesn't even come close, as illustrated in the example below. The key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
+Clearly, Monte Carlo search doesn't choose the optimal move, but for many simple games, a large number of random playouts will suffice . key is that while some positions might be easy to win with against a random opponent, they are utterly undefensible against a _competent_ opponent. 
 
 
 ### Upper-Confidence Bounds Applied to Trees (UCT)
