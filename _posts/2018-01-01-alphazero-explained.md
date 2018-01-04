@@ -333,8 +333,24 @@ class Net(TrainableModel):
         return {'target': x}
 ~~~
 
+Now, we can modify the `record()` and `heuristic_value()` functions to make them train and predict with the neural net, respectively:
 
+~~~ python
 
+# store statistics in DCNN
+model = Net()
+
+# update log for game
+def record(game, score):
+    dataset = [{'input': game.state(), 'target': score}]
+    model.fit(dataset, batch_size=1, verbose=False)
+
+def heuristic_value(game):
+    dataset = [{'input': game.state(), 'target': None}]
+    return model.predict(dataset).mean()
+~~~
+
+After only two days training with this algorithm, we can achieve near-optimal play (i.e multiple threat sequences followed by a double-threat victory) on 9 by 9 Gomoku with just my single-threaded 2015 Macbook. Using deep learning really does significantly cut down the search time and improve the generality of standard MCTS exponentially.
 
 
 
