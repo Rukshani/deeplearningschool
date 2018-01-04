@@ -17,11 +17,11 @@ Demis Hassabis and his team at DeepMind believed otherwise. And they spent three
 {:.image-caption}
 The highly publicized match between Lee Sedol, 9th dan Go grandmaster, and AlphaGo. Google DeepMind's program won 4 out of 5 games.
 
-But I'm not here to talk about AlphaGo. I'm here to discuss AlphaZero, the algorithm some DeepMind researchers released a year later. The algorithm that uses NO previous information or human-played games whatsoever, knowing nothing but the rules of the game. The algorithm that was able to handily beat the original version of AlphaGo in only four hours (?) of training time. The algorithm that can be applied without modification to chess, Shogi, and (AI researchers believe) almost any game with perfect information and no randomness.
+But I'm not here to talk about AlphaGo. I'm here to discuss AlphaZero, the algorithm some DeepMind researchers released a year later. The algorithm that uses NO previous information or human-played games whatsoever, starting with nothing but the rules of the game. The algorithm that was able to handily beat the original version of AlphaGo in only four hours (?) of training time. The algorithm that can be applied without modification to chess, Shogi, and almost any other "classical" game with perfect information and no random elements.
 
-AlphaGo is, at its heart, a story about human underdogs beating the odds -- applying new techniques 
+If computer programs could feel humilitation, AlphaZero would be making every commercial AI chess or Go program _overload_ with shame. Every single one of them (including the original AlphaGo) uses ridiculously large precomputed tablebases of moves, professional datasets of "well-played games", and carefully crafted heuristic functions. Improving these programs required ekeing out more efficiency from the underlying hardware and making tiny but arcane changes to various interlocking factors and scores. AlphaZero saw the cutthroat, hypercompetitive ecosystem of competitive game-playing, forged through hundreds of thousands of hours of programmer effort, and decided that it was a problem worth spending just _four hours_ on. That's gotta hurt.
 
-The algorithm that is a **radical simplification** of AlphaGo, so much simpler that even a lowly blogger like me is able to explain it and teach YOU how to code it. At least, that's the idea.
+And to add insult to injury, AlphaZero is a _radically_ simple algorithm. It's so simple that even a lowly blogger like me should be able to explain it and teach YOU how to code it. At least, that's the idea.
 
 
 
