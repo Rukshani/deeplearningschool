@@ -272,9 +272,7 @@ To see why, look at the diagram below. The first and second Gomoku games are com
 {:.image-caption}
 These Gomoku opening games are fundamentally ver similar, even though they are shifted and have minor variations in relative piece placement.
 
-Humans have no problem noting the similarities between different game positions and intuitively noting that  in fact, that's how most of our intuition in playing games comes about! But how can we train an AI to do the same? 
-
-We can encode 
+Humans have no problem noting the similarities between different game positions and intuitively noting that similar strategies should apply. In fact, rather than memorizing different game states, we tend to do this by default. But how can we train an AI to do the same? 
 
 
 
