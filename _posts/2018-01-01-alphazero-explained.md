@@ -87,7 +87,7 @@ def value(game):
     return max(state_values)
 ~~~
 
-Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the lowest resultant score for the opponent. We call this the DFS approach because, to choose a move, we have to do depth-first search on the tree of possible game states. 
+Now, how can we create an AI that always chooses the "best move"? We simply tell the AI to pick a move that results in the lowest resultant score for the opponent. We call this the DFS approach because, to choose a move, we have to do [depth-first search](https://en.wikipedia.org/wiki/Depth-first_search) on the tree of possible game states. 
 
 ~~~ python
 r"""
@@ -129,7 +129,7 @@ Branching paths in the game of Go. There are about 150-250 moves on average play
 
 The reason for the slow progress of DFS is that when estimating the value of a given state in the search, both players must play **optimally**, choosing the move that gives them the best value, requiring complex recursion. Maybe, instead of making the players choose optimal moves (which is extremely computationally expensive), we can compute the value of a state by making the players choose _random_ moves from there on, and seeing who wins. Or perhaps we could even use cheap computational heuristics to make the players more likely to choose good moves.
 
-This is the basic idea between Monte Carlo Tree Search -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts. Observe how similar this code is to the previous DFS code. The only difference is that instead of iterating through all move possibilities and picking the "best" one, we randomly choose moves.
+This is the basic idea between [Monte Carlo Tree Search](http://mcts.ai/) -- use random exploration to estimate the value of a state. We call a single random game a "playout"; if you play 1000 playouts from a given position $X$ and player 1 wins $60\%$ of the time, it's likely that that position $X$ is better for player 1 than player 2. Thus, we can create  a `monte_carlo_value()` function that estimates the value of a state using a given number of random playouts. Observe how similar this code is to the previous DFS code. The only difference is that instead of iterating through all move possibilities and picking the "best" one, we randomly choose moves.
 
 ~~~ python
 import random
@@ -282,12 +282,12 @@ These Gomoku opening games are fundamentally very similar, even though they are 
 
 Humans have no problem noting the similarities between different game positions and intuitively noting that similar strategies should apply. In fact, rather than memorizing different game states, we tend to do this by default. But how can we train an AI to do the same? 
 
-The key here is learning to use deep convolutional neural networks (DCNNs) as **fuzzy stores of value**. Previous research has shown that DCNNs show success at a wide variety of spatial and image tasks, including image classification, scene reconstruction, handwriting recognition, and much more. Crucially, DCNNs are able to learn abstract representations of images; after being shown a few thousand diverse photos of cats, for example, they can learn to classify cats of any angle, location, or color.
+The key here is learning to use deep convolutional neural networks (DCNNs) as **fuzzy stores of value**. Previous research has shown that DCNNs show success at a wide variety of image tasks, including [image classification](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf), [scene reconstruction](https://arxiv.org/pdf/1604.00449.pdf), handwriting recognition, and much more. Crucially, DCNNs are able to learn abstract representations of images; after being shown a few thousand diverse photos of cats, for example, they can learn to classify cats of any angle, location, or color.
 
 ![dcnn.jpg]({{site.baseurl}}/media/dcnn.jpg)
 
 {:.image-caption}
-A simple example DCNN architecture. Deep convolutional networks heavily leverage local similarities and structure in images, and may owe their success to being structured similarly to the human optical cortex.
+A simple example DCNN architecture. Deep convolutional networks heavily leverage local similarities and structure in images, and may owe their success to being structured similarly to the [human optical cortex](https://www.biorxiv.org/content/early/2017/08/29/133694).
 
 Instead of memorizing a heuristic value for every game state we encounter and putting it in a hashtable, we can train a deep neural network to _learn_ heuristic values from "images" of a game board. The network will remember previous states fairly accurately (assuming we train the DCNN well) but it will also be able to generalize to new, never-before-seen game-states. Sure, because DCNNs are a learning algorithm, the predicted values of states will never be perfect, but that's OK -- we're just using them as fuzzy heuristics in the search algorithm anyway. All our previous methods were based on exhaustive playouts; adding in a deep neural network gives our models more of the learned "intuition" that human players often leverage.
 
