@@ -185,7 +185,7 @@ where:
 - $n_i$: the number of plays of move i in all simulations thus far
 - $N$: the total number of game states simulated
 
-The first term in the value privileges exploitation; playing known moves with high values -- that tend to result in victory. The second term incentivizes exploration; trying out moves that have a low visit count and updating the statistics so that we have a better knowledge of how valuable/useful these moves are.
+The first term in the value privileges exploitation; playing known moves with high values and  tend to result in victory. The second term incentivizes exploration; trying out moves that have a low visit count and updating the statistics so that we have a better knowledge of how valuable/useful these moves are.
 
 Whereas the previous two algorithms we worked with, DFS and MCTS, were static, UCT involves learning over time. The first time the UCT algorithm runs, it focuses more on exploring all game states within the playouts (looking a lot like MCTS). But as it collects more and more data, the random playouts become less random and more "heavy", exploring moves and paths that have already proven to be good choices and ignoring those that haven't. 
 
