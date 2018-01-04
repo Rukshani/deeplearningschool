@@ -289,9 +289,49 @@ A simple example DCNN architecture. Deep convolutional networks heavily leverage
 
 Instead of memorizing a heuristic value for every game state we encounter and putting it in a hashtable, we can train a deep neural network to _learn_ heuristic values from "images" of a game board. The network will remember previous states fairly accurately (assuming we train the DCNN well) but it will also be able to generalize to new, never-before-seen game-states. Sure, because DCNNs are a learning algorithm, the predicted values of states will never be perfect, but that's OK -- we're just using them as fuzzy heuristics in the search algorithm anyway. All our previous methods were based on exhaustive playouts; adding in a deep neural network gives our models more of the learned "intuition" that human players often leverage.
 
+Here's some code that creates a simple DCNN in [PyTorch](http://pytorch.org/) (using my [torchtrain](https://github.com/nikcheerla/torchtrain) library to enable Pythonic data loading), designed to predict the value of a given 19 by 19 state in Gomoku.
 
+~~~ python
 
+from torchtrain.modules import TrainableModel
 
+class Net(TrainableModel):
+
+	def __init__(self):
+
+		super(TrainableModel, self).__init__()
+		self.conv1 = nn.Conv2d(2, 64, kernel_size=(3, 3), padding=(1, 1))
+		self.conv2 = nn.Conv2d(64, 128, kernel_size=(3, 3), padding=(1, 1))
+		self.conv3 = nn.Conv2d(128, 128, kernel_size=(3, 3), padding=(1, 1))
+		self.conv4 = nn.Conv2d(128, 128, kernel_size=(3, 3), padding=(1, 1))
+		self.layer1 = nn.Linear(128, 256)
+		self.layer2 = nn.Linear(256, 1)
+
+	def loss(self, data, data_pred):
+		Y_pred = data_pred["target"]
+		Y_target = data["target"]
+		return (F.mse_loss(Y_pred, Y_target))
+
+	def forward(self, data):
+		x = data['input']
+        
+        # Convolutions mixed with pooling layers
+		x = x.view(-1, 2, 19, 19)
+		x = F.relu(self.conv1(x))
+		x = F.relu(self.conv2(x))
+		x = F.max_pool2d(x, (2, 2))
+		x = F.relu(self.conv3(x))
+		x = F.max_pool2d(x, (2, 2))
+		x = F.relu(self.conv4(x))
+
+		x = F.max_pool2d(x, (4, 4))[:, :, 0, 0]
+		x = F.dropout(x, p=0.2, training=self.training)
+		
+		x = self.layer1(x)
+		x = self.layer2(F.tanh(x))
+
+		return {'target': x}
+~~~
 
 
 ### Does AlphaZero Deserve The Hype?
