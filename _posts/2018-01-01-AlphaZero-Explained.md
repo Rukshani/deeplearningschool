@@ -137,7 +137,7 @@ import random
 import numpy as np
 from games.games import AbstractGame
 
-def playout(game):
+def playout_value(game):
     if game.over():
         return -game.score()
     
@@ -153,7 +153,7 @@ Finds the expected value of a game by running the specified number
 of random simulations.
 """
 def monte_carlo_value(game, N=100):
-    scores = [playout(game) for i in range(0, N)]
+    scores = [playout_value(game) for i in range(0, N)]
     return np.mean(scores)
 
 r"""
@@ -231,7 +231,7 @@ def record(game, score):
     visits[hashable(game.state()] = visits.get(hashable(game.state(), 0) + 1
     differential[hashable(game.state()] = differential.get(hashable(game.state(), 0) + score
 
-def playout(game):
+def playout_value(game):
     if game.over():
         record(game, -game.score())
         return -game.score()
@@ -243,7 +243,7 @@ def playout(game):
         game.undo_move()
     move = max(action_heuristic_dict, key=action_heuristic_dict.get)
     game.make_move(move)
-    value = -value(game)
+    value = -playout_value(game)
     game.undo_move()
     record(game, value)
     
