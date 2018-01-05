@@ -143,7 +143,7 @@ def playout_value(game):
     
     move = random.choice(game.valid_moves())
     game.make_move(move)
-    value = -value(game))
+    value = -playout_value(game))
     game.undo_move()
 	
     return value
