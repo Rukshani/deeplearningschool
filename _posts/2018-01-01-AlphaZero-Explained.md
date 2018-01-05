@@ -1,4 +1,6 @@
 ---
+layout: post
+title: AlphaZero Explained
 published: true
 ---
 
