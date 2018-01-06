@@ -29,3 +29,6 @@ prose:
   rooturl:        '_posts'
   siteurl:        http://nikcheerla.github.io/deeplearningschool
   media:          'media'
+
+plugins:
+  - jekyll-seo-tag
